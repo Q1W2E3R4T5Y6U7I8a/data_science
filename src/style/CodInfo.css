@@ -1,0 +1,91 @@
+/* Add to your existing App.css */
+
+/* Minimized Terminal */
+.cod-info-minimized {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  font-family: 'Share Tech Mono', 'Courier New', monospace;
+  cursor: pointer;
+  animation: slideIn 0.5s ease-out;
+}
+
+.cod-terminal-minimized {
+  background: rgba(0, 0, 0, 0.95);
+  border: 2px solid #3a5f7f;
+  border-radius: 8px;
+  padding: 8px 15px;
+  color: #00ff4c;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+}
+
+.cod-expand {
+  color: #ffd700;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.cod-close {
+  color: #ffd700;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 0 5px;
+}
+
+.cod-close:hover {
+  color: #ff3333;
+}
+
+/* Command Input Styles */
+.cod-command-line {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  padding-top: 5px;
+  border-top: 1px dashed #3a5f7f;
+}
+
+.cod-prompt {
+  color: #ffd700;
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+.cod-command-input {
+  background: transparent;
+  border: none;
+  color: #00ff4c;
+  font-family: 'Share Tech Mono', 'Courier New', monospace;
+  font-size: 13px;
+  flex: 1;
+  outline: none;
+  caret-color: #ffd700;
+}
+
+.cod-command-input::placeholder {
+  color: #3a5f7f;
+  opacity: 0.5;
+}
+
+/* Command output styles */
+.cod-line.command {
+  color: #ffd700;
+}
+
+.cod-line.output {
+  color: #00ff4c;
+  margin-left: 15px;
+  opacity: 0.9;
+}
+
+/* Hover effect for minimized terminal */
+.cod-info-minimized:hover .cod-terminal-minimized {
+  border-color: #ffd700;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+}

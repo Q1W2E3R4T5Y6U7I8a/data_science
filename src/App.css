@@ -1,38 +1,213 @@
-.App {
-  text-align: center;
-}
+@import './style/CodInfo.css';
+@import './style/PrivacyPolicy.css';
+@import './style/country-colors.css';
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.app {
+  font-family: 'Courier New', monospace;
+  background: #000000;
+  color: #00ff4c;
   min-height: 100vh;
+  padding: 15px;
+}
+
+.header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  border-bottom: 2px solid #3a5f7f;
+  padding-bottom: 8px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.mode-switch {
+  display: inline-flex;
+  gap: 8px;
+  margin-left: 10px;
+}
+.mode-button {
+  cursor: pointer;
+  padding: 2px 6px;
+  border: 1px solid #3a5f7f;
+  border-radius: 4px;
+  font-size: 12px;
+
+}
+.mode-button.active {
+  background: #3a5f7f;
+}
+
+.map-container {
+  position: relative;
+  border: 2px solid #3a5f7f;
+  background: #ffffff;
+  overflow: hidden; /* keep scaled elements inside the box */
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.compass {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border: 2px solid #ffd700;
+  border-radius: 50%;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  font-size: 12px;
+  color: #ffd700;
+  background: #0a1420;
 }
 
-.App-link {
-  color: #61dafb;
+.target {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: #1a2f3f;
+  border: 2px solid #ffd700;
+  padding: 12px;
+  min-width: 220px;
+  font-size: 13px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  cursor: pointer;
+  color: #ffd700;
+  font-size: 16px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #0a1420;
+  color: #ffd700;
+  font-size: 18px;
+}
+
+/* Add to your existing App.css */
+
+/* Music Control Styles */
+.music-control-container {
+  position: relative;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.music-button {
+  background: transparent;
+  border: 1px solid #3a5f7f;
+  color: #00ff4c;
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+}
+
+.music-button:hover {
+  border-color: #ffd700;
+  color: #ffd700;
+}
+
+.music-button.playing {
+  border-color: #15bb03;
+  color: #15bb03;
+  animation: pulse 2s infinite;
+}
+
+.music-icon {
+  font-size: 14px;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(21, 187, 3, 0.4);
   }
-  to {
-    transform: rotate(360deg);
+  70% {
+    box-shadow: 0 0 0 5px rgba(21, 187, 3, 0);
   }
+  100% {
+    box-shadow: 0 0 0 0 rgba(21, 187, 3, 0);
+  }
+}
+
+.volume-slider-container {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 5px;
+  background: #1a2f3f;
+  border: 1px solid #3a5f7f;
+  border-radius: 4px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 1000;
+  min-width: 150px;
+}
+
+.volume-slider {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  background: #3a5f7f;
+  border-radius: 2px;
+  outline: none;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #ffd700;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  background: #15bb03;
+}
+
+.volume-value {
+  color: #ffd700;
+  font-size: 11px;
+  min-width: 35px;
+  text-align: right;
+}
+
+/* Update header to accommodate music control */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #3a5f7f;
+  padding-bottom: 8px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.mode-switch {
+  display: inline-flex;
+  gap: 8px;
+  margin-left: 10px;
 }

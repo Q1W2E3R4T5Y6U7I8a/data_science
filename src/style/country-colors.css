@@ -1,0 +1,442 @@
+/* src/data/country-colors.css */
+:root {
+  /* Continent-based colors */
+  --continent-1: #4a6fa5;   /* United States (North America) */
+  --continent-2: #e6b800;   /* China (Asia) */
+  --continent-3: #2c5f8a;   /* Germany (Europe) */
+  --continent-4: #e6b800;   /* Japan (Asia) */
+  --continent-5: #e6b800;   /* India (Asia) */
+  --continent-6: #2c5f8a;   /* United Kingdom (Europe) */
+  --continent-7: #2c5f8a;   /* France (Europe) */
+  --continent-8: #2c5f8a;   /* Italy (Europe) */
+  --continent-9: #e6b800;   /* Russia (Europe/Asia) - use Europe blue */
+  --continent-10: #4a6fa5;  /* Canada (North America) */
+  --continent-11: #6b8e23;  /* Brazil (South America) */
+  --continent-12: #2c5f8a;  /* Spain (Europe) */
+  --continent-13: #4a6fa5;  /* Mexico (North America) */
+  --continent-14: #e6b800;  /* South Korea (Asia) */
+  --continent-15: #d4af37;  /* Australia (Oceania) */
+  --continent-16: #e6b800;  /* Turkey (Asia Minor) */
+  --continent-17: #e6b800;  /* Indonesia (Asia) */
+  --continent-18: #2c5f8a;  /* Netherlands (Europe) */
+  --continent-19: #e6b800;  /* Saudi Arabia (Asia) */
+  --continent-20: #2c5f8a;  /* Poland (Europe) */
+  --continent-21: #2c5f8a;  /* Switzerland (Europe) */
+  --continent-22: #e6b800;  /* Taiwan (Asia) */
+  --continent-23: #2c5f8a;  /* Belgium (Europe) */
+  --continent-24: #2c5f8a;  /* Ireland (Europe) */
+  --continent-25: #6b8e23;  /* Argentina (South America) */
+  --continent-26: #2c5f8a;  /* Sweden (Europe) */
+  --continent-27: #e6b800;  /* Israel (Asia) */
+  --continent-28: #e6b800;  /* Singapore (Asia) */
+  --continent-29: #e6b800;  /* UAE (Asia) */
+  --continent-30: #2c5f8a;  /* Austria (Europe) */
+  --continent-31: #e6b800;  /* Thailand (Asia) */
+  --continent-32: #2c5f8a;  /* Norway (Europe) */
+  --continent-33: #e6b800;  /* Philippines (Asia) */
+  --continent-34: #e6b800;  /* Vietnam (Asia) */
+  --continent-35: #e6b800;  /* Bangladesh (Asia) */
+  --continent-36: #e6b800;  /* Malaysia (Asia) */
+  --continent-37: #2c5f8a;  /* Denmark (Europe) */
+  --continent-38: #6b8e23;  /* Colombia (South America) */
+  --continent-39: #e6b800;  /* Hong Kong (Asia) */
+  --continent-40: #228b22;  /* South Africa (Africa) */
+  --continent-41: #2c5f8a;  /* Romania (Europe) */
+  --continent-42: #e6b800;  /* Pakistan (Asia) */
+  --continent-43: #2c5f8a;  /* Czechia (Europe) */
+  --continent-44: #e6b800;  /* Iran (Asia) */
+  --continent-45: #228b22;  /* Egypt (Africa) */
+  --continent-46: #6b8e23;  /* Chile (South America) */
+  --continent-47: #2c5f8a;  /* Portugal (Europe) */
+  --continent-48: #6b8e23;  /* Peru (South America) */
+  --continent-49: #2c5f8a;  /* Finland (Europe) */
+  --continent-50: #e6b800;  /* Kazakhstan (Asia) */
+  --continent-51: #228b22;  /* Algeria (Africa) */
+  --continent-52: #228b22;  /* Nigeria (Africa) */
+  --continent-53: #2c5f8a;  /* Greece (Europe) */
+  --continent-54: #e6b800;  /* Iraq (Asia) */
+  --continent-55: #d4af37;  /* New Zealand (Oceania) */
+  --continent-56: #2c5f8a;  /* Hungary (Europe) */
+  --continent-57: #e6b800;  /* Qatar (Asia) */
+  --continent-58: #2c5f8a;  /* Ukraine (Europe) */
+  --continent-59: #6b8e23;  /* Cuba (North America? Caribbean) */
+  --continent-60: #228b22;  /* Morocco (Africa) */
+  --continent-61: #e6b800;  /* Kuwait (Asia) */
+  --continent-62: #2c5f8a;  /* Slovakia (Europe) */
+  --continent-63: #e6b800;  /* Uzbekistan (Asia) */
+  --continent-64: #228b22;  /* Kenya (Africa) */
+  --continent-65: #6b8e23;  /* Ecuador (South America) */
+  --continent-66: #6b8e23;  /* Dominican Republic (Caribbean) */
+  --continent-67: #2c5f8a;  /* Bulgaria (Europe) */
+  --continent-68: #4a6fa5;  /* Puerto Rico (North America) */
+  --continent-69: #4a6fa5;  /* Guatemala (North America) */
+  --continent-70: #228b22;  /* Angola (Africa) */
+  --continent-71: #228b22;  /* Ghana (Africa) */
+  --continent-72: #228b22;  /* Ethiopia (Africa) */
+  --continent-73: #e6b800;  /* Oman (Asia) */
+  --continent-74: #2c5f8a;  /* Croatia (Europe) */
+  --continent-75: #4a6fa5;  /* Costa Rica (North America) */
+  --continent-76: #2c5f8a;  /* Luxembourg (Europe) */
+  --continent-77: #2c5f8a;  /* Serbia (Europe) */
+  --continent-78: #228b22;  /* Côte d'Ivoire (Africa) */
+  --continent-79: #e6b800;  /* Sri Lanka (Asia) */
+  --continent-80: #2c5f8a;  /* Lithuania (Europe) */
+  --continent-81: #4a6fa5;  /* Panama (North America) */
+  --continent-82: #228b22;  /* Tanzania (Africa) */
+  --continent-83: #2c5f8a;  /* Belarus (Europe) */
+  --continent-84: #6b8e23;  /* Uruguay (South America) */
+  --continent-85: #6b8e23;  /* Venezuela (South America) */
+  --continent-86: #228b22;  /* DR Congo (Africa) */
+  --continent-87: #2c5f8a;  /* Slovenia (Europe) */
+  --continent-88: #e6b800;  /* Azerbaijan (Asia) */
+  --continent-89: #e6b800;  /* Turkmenistan (Asia) */
+  --continent-90: #228b22;  /* Uganda (Africa) */
+  --continent-91: #228b22;  /* Cameroon (Africa) */
+  --continent-92: #e6b800;  /* Myanmar (Asia) */
+  --continent-93: #228b22;  /* Tunisia (Africa) */
+  --continent-94: #6b8e23;  /* Bolivia (South America) */
+  --continent-95: #e6b800;  /* Jordan (Asia) */
+  --continent-96: #228b22;  /* Zimbabwe (Africa) */
+  --continent-97: #e6b800;  /* Macao (Asia) */
+  --continent-98: #e6b800;  /* Cambodia (Asia) */
+  --continent-99: #228b22;  /* Libya (Africa) */
+  --continent-100: #2c5f8a; /* Latvia (Europe) */
+  --continent-101: #6b8e23; /* Paraguay (South America) */
+  --continent-102: #e6b800; /* Bahrain (Asia) */
+  --continent-103: #2c5f8a; /* Estonia (Europe) */
+  --continent-104: #e6b800; /* Nepal (Asia) */
+  --continent-105: #2c5f8a; /* Cyprus (Europe/Asia) */
+  --continent-106: #4a6fa5; /* Honduras (North America) */
+  --continent-107: #2c5f8a; /* Iceland (Europe) */
+  --continent-108: #e6b800; /* Georgia (Asia) */
+  --continent-109: #228b22; /* Senegal (Africa) */
+  --continent-110: #4a6fa5; /* El Salvador (North America) */
+  --continent-111: #228b22; /* Sudan (Africa) */
+  --continent-112: #2c5f8a; /* Bosnia (Europe) */
+  --continent-113: #d4af37; /* Papua New Guinea (Oceania) */
+  --continent-114: #4a6fa5; /* Haiti (Caribbean) */
+  --continent-115: #2c5f8a; /* Albania (Europe) */
+  --continent-116: #228b22; /* Zambia (Africa) */
+  --continent-117: #e6b800; /* Lebanon (Asia) */
+  --continent-118: #e6b800; /* Armenia (Asia) */
+  --continent-119: #2c5f8a; /* Malta (Europe) */
+  --continent-120: #228b22; /* Guinea (Africa) */
+  --continent-121: #228b22; /* Burkina Faso (Africa) */
+  --continent-122: #4a6fa5; /* Trinidad (Caribbean) */
+  --continent-123: #228b22; /* Mali (Africa) */
+  --continent-124: #e6b800; /* Mongolia (Asia) */
+  --continent-125: #6b8e23; /* Guyana (South America) */
+  --continent-126: #228b22; /* Mozambique (Africa) */
+  --continent-127: #228b22; /* Benin (Africa) */
+  --continent-128: #4a6fa5; /* Jamaica (Caribbean) */
+  --continent-129: #228b22; /* Niger (Africa) */
+  --continent-130: #228b22; /* Chad (Africa) */
+  --continent-131: #228b22; /* Gabon (Africa) */
+  --continent-132: #4a6fa5; /* Nicaragua (North America) */
+  --continent-133: #e6b800; /* Kyrgyzstan (Asia) */
+  --continent-134: #e6b800; /* Syria (Asia) */
+  --continent-135: #2c5f8a; /* Moldova (Europe) */
+  --continent-136: #228b22; /* Madagascar (Africa) */
+  --continent-137: #228b22; /* Botswana (Africa) */
+  --continent-138: #2c5f8a; /* North Macedonia (Europe) */
+  --continent-139: #e6b800; /* Afghanistan (Asia) */
+  --continent-140: #e6b800; /* Yemen (Asia) */
+  --continent-141: #e6b800; /* Tajikistan (Asia) */
+  --continent-142: #e6b800; /* Laos (Asia) */
+  --continent-143: #e6b800; /* North Korea (Asia) */
+  --continent-144: #4a6fa5; /* Bahamas (Caribbean) */
+  --continent-145: #228b22; /* Mauritius (Africa) */
+  --continent-146: #228b22; /* Congo (Africa) */
+  --continent-147: #e6b800; /* Brunei (Asia) */
+  --continent-148: #228b22; /* Malawi (Africa) */
+  --continent-149: #228b22; /* Rwanda (Africa) */
+  --continent-150: #228b22; /* Namibia (Africa) */
+  --continent-151: #e6b800; /* Palestine (Asia) */
+  --continent-152: #228b22; /* Equatorial Guinea (Africa) */
+  --continent-153: #228b22; /* Somalia (Africa) */
+  --continent-154: #228b22; /* Mauritania (Africa) */
+  --continent-155: #228b22; /* Togo (Africa) */
+  --continent-156: #d4af37; /* New Caledonia (Oceania) */
+  --continent-157: #2c5f8a; /* Monaco (Europe) */
+  --continent-158: #2c5f8a; /* Liechtenstein (Europe) */
+  --continent-159: #2c5f8a; /* Montenegro (Europe) */
+  --continent-160: #4a6fa5; /* Bermuda (North America) */
+  --continent-161: #228b22; /* Sierra Leone (Africa) */
+  --continent-162: #e6b800; /* Maldives (Asia) */
+  --continent-163: #4a6fa5; /* Barbados (Caribbean) */
+  --continent-164: #2c5f8a; /* Isle of Man (Europe) */
+  --continent-165: #4a6fa5; /* Cayman Islands (Caribbean) */
+  --continent-166: #228b22; /* Burundi (Africa) */
+  --continent-167: #d4af37; /* Guam (Oceania) */
+  --continent-168: #d4af37; /* French Polynesia (Oceania) */
+  --continent-169: #d4af37; /* Fiji (Oceania) */
+  --continent-170: #228b22; /* Eswatini (Africa) */
+  --continent-171: #228b22; /* Liberia (Africa) */
+  --continent-172: #228b22; /* South Sudan (Africa) */
+  --continent-173: #4a6fa5; /* US Virgin Islands (Caribbean) */
+  --continent-174: #228b22; /* Djibouti (Africa) */
+  --continent-175: #6b8e23; /* Suriname (South America) */
+  --continent-176: #2c5f8a; /* Andorra (Europe) */
+  --continent-177: #4a6fa5; /* Aruba (Caribbean) */
+  --continent-178: #2c5f8a; /* Faroe Islands (Europe) */
+  --continent-179: #e6b800; /* Bhutan (Asia) */
+  --continent-180: #2c5f8a; /* Greenland (Europe/North America) */
+  --continent-181: #228b22; /* Central African Republic (Africa) */
+  --continent-182: #4a6fa5; /* Belize (North America) */
+  --continent-183: #4a6fa5; /* Curaçao (Caribbean) */
+  --continent-184: #228b22; /* Cabo Verde (Africa) */
+  --continent-185: #4a6fa5; /* Saint Lucia (Caribbean) */
+  --continent-186: #228b22; /* Gambia (Africa) */
+  --continent-187: #228b22; /* Guinea-Bissau (Africa) */
+  --continent-188: #228b22; /* Lesotho (Africa) */
+  --continent-189: #4a6fa5; /* Antigua (Caribbean) */
+  --continent-190: #228b22; /* Eritrea (Africa) */
+  --continent-191: #2c5f8a; /* San Marino (Europe) */
+  --continent-192: #228b22; /* Seychelles (Africa) */
+  --continent-193: #e6b800; /* Timor-Leste (Asia) */
+  --continent-194: #d4af37; /* Solomon Islands (Oceania) */
+  --continent-195: #4a6fa5; /* Turks and Caicos (Caribbean) */
+  --continent-196: #4a6fa5; /* Sint Maarten (Caribbean) */
+  --continent-197: #228b22; /* Comoros (Africa) */
+  --continent-198: #4a6fa5; /* British Virgin Islands (Caribbean) */
+  --continent-199: #4a6fa5; /* Grenada (Caribbean) */
+  --continent-200: #d4af37; /* Samoa (Oceania) */
+  --continent-201: #4a6fa5; /* St. Vincent (Caribbean) */
+  --continent-202: #4a6fa5; /* Saint Kitts (Caribbean) */
+  --continent-203: #d4af37; /* Vanuatu (Oceania) */
+  --continent-204: #d4af37; /* Northern Mariana Islands (Oceania) */
+  --continent-205: #228b22; /* Sao Tome (Africa) */
+  --continent-206: #d4af37; /* American Samoa (Oceania) */
+  --continent-207: #4a6fa5; /* Dominica (Caribbean) */
+  --continent-208: #4a6fa5; /* Saint Martin (Caribbean) */
+  --continent-209: #d4af37; /* Tonga (Oceania) */
+  --continent-210: #d4af37; /* Micronesia (Oceania) */
+  --continent-211: #4a6fa5; /* Anguilla (Caribbean) */
+  --continent-212: #d4af37; /* Cook Islands (Oceania) */
+  --continent-213: #d4af37; /* Palau (Oceania) */
+  --continent-214: #d4af37; /* Kiribati (Oceania) */
+  --continent-215: #d4af37; /* Marshall Islands (Oceania) */
+  --continent-216: #d4af37; /* Nauru (Oceania) */
+  --continent-217: #4a6fa5; /* Montserrat (Caribbean) */
+  --continent-218: #d4af37; /* Tuvalu (Oceania) */
+
+  /* Flag-based colors (approximations – replace with actual flagColors later) */
+  --flag-1: #3c3b6e;   /* USA (blue) */
+  --flag-2: #de2910;   /* China (red) */
+  --flag-3: #000000;   /* Germany (black) */
+  --flag-4: #bc002d;   /* Japan (red) */
+  --flag-5: #ff9933;   /* India (saffron) */
+  --flag-6: #012169;   /* UK (blue) */
+  --flag-7: #0055a4;   /* France (blue) */
+  --flag-8: #009246;   /* Italy (green) */
+  --flag-9: #d52b1e;   /* Russia (red) */
+  --flag-10: #ff0000;  /* Canada (red) */
+  --flag-11: #009c3b;  /* Brazil (green) */
+  --flag-12: #aa151b;  /* Spain (red) */
+  --flag-13: #006847;  /* Mexico (green) */
+  --flag-14: #cd2e3a;  /* South Korea (red) */
+  --flag-15: #00008b;  /* Australia (blue) */
+  --flag-16: #e30a17;  /* Turkey (red) */
+  --flag-17: #ff0000;  /* Indonesia (red) */
+  --flag-18: #ae1c28;  /* Netherlands (red) */
+  --flag-19: #006c35;  /* Saudi Arabia (green) */
+  --flag-20: #dc143c;  /* Poland (red) */
+  --flag-21: #ff0000;  /* Switzerland (red) */
+  --flag-22: #fe0000;  /* Taiwan (red) */
+  --flag-23: #000000;  /* Belgium (black) */
+  --flag-24: #169b62;  /* Ireland (green) */
+  --flag-25: #75aadb;  /* Argentina (blue) */
+  --flag-26: #004b87;  /* Sweden (blue) */
+  --flag-27: #0038b8;  /* Israel (blue) */
+  --flag-28: #ff0000;  /* Singapore (red) */
+  --flag-29: #ff0000;  /* UAE (red) */
+  --flag-30: #ed2939;  /* Austria (red) */
+  --flag-31: #00247d;  /* Thailand (blue) */
+  --flag-32: #ba0c2f;  /* Norway (red) */
+  --flag-33: #0038a8;  /* Philippines (blue) */
+  --flag-34: #da251d;  /* Vietnam (red) */
+  --flag-35: #006a4e;  /* Bangladesh (green) */
+  --flag-36: #010066;  /* Malaysia (blue) */
+  --flag-37: #c8102e;  /* Denmark (red) */
+  --flag-38: #fedf00;  /* Colombia (yellow) */
+  --flag-39: #ff0000;  /* Hong Kong (red) */
+  --flag-40: #007749;  /* South Africa (green) */
+  --flag-41: #002b7f;  /* Romania (blue) */
+  --flag-42: #01411c;  /* Pakistan (green) */
+  --flag-43: #d7141a;  /* Czechia (red) */
+  --flag-44: #239f40;  /* Iran (green) */
+  --flag-45: #ce1126;  /* Egypt (red) */
+  --flag-46: #0039a6;  /* Chile (blue) */
+  --flag-47: #006600;  /* Portugal (green) */
+  --flag-48: #d91023;  /* Peru (red) */
+  --flag-49: #002f6c;  /* Finland (blue) */
+  --flag-50: #00afca;  /* Kazakhstan (blue) */
+  --flag-51: #006633;  /* Algeria (green) */
+  --flag-52: #008753;  /* Nigeria (green) */
+  --flag-53: #0d5eaf;  /* Greece (blue) */
+  --flag-54: #ce1126;  /* Iraq (red) */
+  --flag-55: #00247d;  /* New Zealand (blue) */
+  --flag-56: #cd2a3e;  /* Hungary (red) */
+  --flag-57: #8a1538;  /* Qatar (maroon) */
+  --flag-58: #0057b7;  /* Ukraine (blue) */
+  --flag-59: #002a8f;  /* Cuba (blue) */
+  --flag-60: #c1272d;  /* Morocco (red) */
+  --flag-61: #007a3d;  /* Kuwait (green) */
+  --flag-62: #0b4ea2;  /* Slovakia (blue) */
+  --flag-63: #0099b5;  /* Uzbekistan (blue) */
+  --flag-64: #006600;  /* Kenya (green) */
+  --flag-65: #ffdd00;  /* Ecuador (yellow) */
+  --flag-66: #002d62;  /* Dominican Republic (blue) */
+  --flag-67: #00966e;  /* Bulgaria (green) */
+  --flag-68: #ff0000;  /* Puerto Rico (red) */
+  --flag-69: #4997d0;  /* Guatemala (blue) */
+  --flag-70: #cc092f;  /* Angola (red) */
+  --flag-71: #006b3f;  /* Ghana (green) */
+  --flag-72: #078930;  /* Ethiopia (green) */
+  --flag-73: #ce1126;  /* Oman (red) */
+  --flag-74: #ff0000;  /* Croatia (red) */
+  --flag-75: #002b7f;  /* Costa Rica (blue) */
+  --flag-76: #00a1de;  /* Luxembourg (blue) */
+  --flag-77: #0c4076;  /* Serbia (blue) */
+  --flag-78: #f77f00;  /* Côte d'Ivoire (orange) */
+  --flag-79: #ff5e00;  /* Sri Lanka (orange) */
+  --flag-80: #006a44;  /* Lithuania (green) */
+  --flag-81: #005293;  /* Panama (blue) */
+  --flag-82: #1eb53a;  /* Tanzania (green) */
+  --flag-83: #ce1720;  /* Belarus (red) */
+  --flag-84: #0038a8;  /* Uruguay (blue) */
+  --flag-85: #cf142b;  /* Venezuela (red) */
+  --flag-86: #007fff;  /* DR Congo (blue) */
+  --flag-87: #ff0000;  /* Slovenia (red) */
+  --flag-88: #00aeef;  /* Azerbaijan (blue) */
+  --flag-89: #00afca;  /* Turkmenistan (green?) */
+  --flag-90: #fcdd09;  /* Uganda (yellow) */
+  --flag-91: #007a5e;  /* Cameroon (green) */
+  --flag-92: #fecb00;  /* Myanmar (yellow) */
+  --flag-93: #e70013;  /* Tunisia (red) */
+  --flag-94: #007934;  /* Bolivia (green) */
+  --flag-95: #ce1126;  /* Jordan (red) */
+  --flag-96: #006400;  /* Zimbabwe (green) */
+  --flag-97: #006c35;  /* Macao (green) */
+  --flag-98: #032ea1;  /* Cambodia (blue) */
+  --flag-99: #239e46;  /* Libya (green) */
+  --flag-100: #9e3039; /* Latvia (red) */
+  --flag-101: #0038a8; /* Paraguay (blue) */
+  --flag-102: #ce1126; /* Bahrain (red) */
+  --flag-103: #0072ce; /* Estonia (blue) */
+  --flag-104: #003893; /* Nepal (blue) */
+  --flag-105: #d57800; /* Cyprus (orange) */
+  --flag-106: #00bce4; /* Honduras (blue) */
+  --flag-107: #003897; /* Iceland (blue) */
+  --flag-108: #ff0000; /* Georgia (red) */
+  --flag-109: #00853f; /* Senegal (green) */
+  --flag-110: #0047ab; /* El Salvador (blue) */
+  --flag-111: #d21034; /* Sudan (red) */
+  --flag-112: #001489; /* Bosnia (blue) */
+  --flag-113: #000000; /* Papua New Guinea (black) */
+  --flag-114: #00209f; /* Haiti (blue) */
+  --flag-115: #e41e20; /* Albania (red) */
+  --flag-116: #198a00; /* Zambia (green) */
+  --flag-117: #ed1c24; /* Lebanon (red) */
+  --flag-118: #d90012; /* Armenia (red) */
+  --flag-119: #ffffff; /* Malta (white) */
+  --flag-120: #ce1126; /* Guinea (red) */
+  --flag-121: #009e49; /* Burkina Faso (green) */
+  --flag-122: #ce1126; /* Trinidad (red) */
+  --flag-123: #14b53a; /* Mali (green) */
+  --flag-124: #da2032; /* Mongolia (red) */
+  --flag-125: #009e49; /* Guyana (green) */
+  --flag-126: #ff0000; /* Mozambique (red) */
+  --flag-127: #008751; /* Benin (green) */
+  --flag-128: #009b3a; /* Jamaica (green) */
+  --flag-129: #e05206; /* Niger (orange) */
+  --flag-130: #002664; /* Chad (blue) */
+  --flag-131: #3a75c4; /* Gabon (blue) */
+  --flag-132: #0067c6; /* Nicaragua (blue) */
+  --flag-133: #ff0000; /* Kyrgyzstan (red) */
+  --flag-134: #ce1126; /* Syria (red) */
+  --flag-135: #0046ae; /* Moldova (blue) */
+  --flag-136: #fc3e32; /* Madagascar (red) */
+  --flag-137: #6da9d2; /* Botswana (blue) */
+  --flag-138: #d20000; /* North Macedonia (red) */
+  --flag-139: #000000; /* Afghanistan (black) */
+  --flag-140: #ce1126; /* Yemen (red) */
+  --flag-141: #ff0000; /* Tajikistan (red) */
+  --flag-142: #ce1126; /* Laos (red) */
+  --flag-143: #024fa2; /* North Korea (blue) */
+  --flag-144: #00a9ce; /* Bahamas (blue) */
+  --flag-145: #ffd500; /* Mauritius (yellow) */
+  --flag-146: #009543; /* Congo (green) */
+  --flag-147: #f7e017; /* Brunei (yellow) */
+  --flag-148: #339e35; /* Malawi (green) */
+  --flag-149: #20603d; /* Rwanda (green) */
+  --flag-150: #003580; /* Namibia (blue) */
+  --flag-151: #007a3d; /* Palestine (green) */
+  --flag-152: #3e9a00; /* Equatorial Guinea (green) */
+  --flag-153: #4189dd; /* Somalia (blue) */
+  --flag-154: #006233; /* Mauritania (green) */
+  --flag-155: #006a4e; /* Togo (green) */
+  --flag-156: #0035ad; /* New Caledonia (blue) */
+  --flag-157: #ce1126; /* Monaco (red) */
+  --flag-158: #002d72; /* Liechtenstein (blue) */
+  --flag-159: #d43b3b; /* Montenegro (red) */
+  --flag-160: #cf142b; /* Bermuda (red) */
+  --flag-161: #1eb53a; /* Sierra Leone (green) */
+  --flag-162: #d21034; /* Maldives (red) */
+  --flag-163: #00267f; /* Barbados (blue) */
+  --flag-164: #cf142b; /* Isle of Man (red) */
+  --flag-165: #012169; /* Cayman Islands (blue) */
+  --flag-166: #ce1126; /* Burundi (red) */
+  --flag-167: #00247d; /* Guam (blue) */
+  --flag-168: #ed2939; /* French Polynesia (red) */
+  --flag-169: #69b3e7; /* Fiji (blue) */
+  --flag-170: #3e5eb9; /* Eswatini (blue) */
+  --flag-171: #00209f; /* Liberia (blue) */
+  --flag-172: #078930; /* South Sudan (green) */
+  --flag-173: #00247d; /* US Virgin Islands (blue) */
+  --flag-174: #6ab2e7; /* Djibouti (blue) */
+  --flag-175: #377e3f; /* Suriname (green) */
+  --flag-176: #10069f; /* Andorra (blue) */
+  --flag-177: #4189dd; /* Aruba (blue) */
+  --flag-178: #cf142b; /* Faroe Islands (red) */
+  --flag-179: #ff4e12; /* Bhutan (orange) */
+  --flag-180: #cf142b; /* Greenland (red) */
+  --flag-181: #003082; /* Central African Republic (blue) */
+  --flag-182: #ce1126; /* Belize (red) */
+  --flag-183: #002b7f; /* Curaçao (blue) */
+  --flag-184: #003893; /* Cabo Verde (blue) */
+  --flag-185: #6ab2e7; /* Saint Lucia (blue) */
+  --flag-186: #ce1126; /* Gambia (red) */
+  --flag-187: #ce1126; /* Guinea-Bissau (red) */
+  --flag-188: #00209f; /* Lesotho (blue) */
+  --flag-189: #ce1126; /* Antigua (red) */
+  --flag-190: #12ad2b; /* Eritrea (green) */
+  --flag-191: #5bb3e8; /* San Marino (blue) */
+  --flag-192: #003f87; /* Seychelles (blue) */
+  --flag-193: #ffc726; /* Timor-Leste (yellow) */
+  --flag-194: #003893; /* Solomon Islands (blue) */
+  --flag-195: #00247d; /* Turks and Caicos (blue) */
+  --flag-196: #002b7f; /* Sint Maarten (blue) */
+  --flag-197: #3a75c4; /* Comoros (blue) */
+  --flag-198: #00247d; /* British Virgin Islands (blue) */
+  --flag-199: #ce1126; /* Grenada (red) */
+  --flag-200: #002b7f; /* Samoa (blue) */
+  --flag-201: #fcd116; /* St. Vincent (yellow) */
+  --flag-202: #009e49; /* Saint Kitts (green) */
+  --flag-203: #ce1126; /* Vanuatu (red) */
+  --flag-204: #0047ab; /* Northern Mariana Islands (blue) */
+  --flag-205: #12ad2b; /* Sao Tome (green) */
+  --flag-206: #00247d; /* American Samoa (blue) */
+  --flag-207: #006b3f; /* Dominica (green) */
+  --flag-208: #002b7f; /* Saint Martin (blue) */
+  --flag-209: #c10000; /* Tonga (red) */
+  --flag-210: #6ab2e7; /* Micronesia (blue) */
+  --flag-211: #cf142b; /* Anguilla (red) */
+  --flag-212: #00247d; /* Cook Islands (blue) */
+  --flag-213: #4aadd0; /* Palau (blue) */
+  --flag-214: #cf1b41; /* Kiribati (red) */
+  --flag-215: #003893; /* Marshall Islands (blue) */
+  --flag-216: #00247d; /* Nauru (blue) */
+  --flag-217: #012169; /* Montserrat (blue) */
+  --flag-218: #5bcffb; /* Tuvalu (blue) */
+}
