@@ -25,9 +25,12 @@ function App() {
   const audioRef = useRef(null);
   const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
 
+  // use PUBLIC_URL so assets resolve correctly on GitHub Pages
+  const publicUrl = process.env.PUBLIC_URL || '';
+
   // Initialize audio
   useEffect(() => {
-    audioRef.current = new Audio('/music_menu.mp3');
+    audioRef.current = new Audio(publicUrl + '/music_menu.mp3');
     audioRef.current.loop = true;
     audioRef.current.volume = musicVolume / 100;
     
@@ -72,7 +75,8 @@ function App() {
   };
 
   useEffect(() => {
-    fetch('/GDP_data.csv')
+    // use relative/public URL path; leading slash fails on gh-pages
+    fetch(publicUrl + '/GDP_data.csv')
       .then(response => response.text())
       .then(csvText => {
         const lines = csvText.split('\n');
