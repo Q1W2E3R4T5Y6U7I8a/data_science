@@ -1,0 +1,348 @@
+/* Header.css - All header-related styles */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-bottom: 2px solid #3a5f7f;
+  padding-bottom: 12px;
+  margin-bottom: 15px;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    letter-spacing: 1px;
+    padding: 8px 0;
+  }
+}
+
+/* Mode controls container */
+.mode-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  flex: 1;
+}
+
+@media (min-width: 768px) {
+  .mode-controls {
+    justify-content: flex-start;
+  }
+}
+
+/* Mode switch groups */
+.mode-switch, .color-mode-switch {
+  display: inline-flex;
+  gap: 4px;
+  background: rgba(58, 95, 127, 0.2);
+  padding: 4px;
+  border-radius: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .mode-switch, .color-mode-switch {
+    gap: 6px;
+    padding: 3px;
+  }
+}
+
+/* Mode buttons - FIXED CENTERING */
+.mode-button {
+  cursor: pointer;
+  padding: 4px 8px;
+  border: 1px solid #3a5f7f;
+  border-radius: 4px;
+  font-size: 11px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  background: transparent;
+  color: #00ff4c;
+  
+  /* CENTERING FIXES */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1;
+  min-height: 28px;
+}
+
+@media (min-width: 768px) {
+  .mode-button {
+    padding: 4px 8px;
+    font-size: 12px;
+    min-height: 30px;
+  }
+}
+
+.mode-button.active {
+  background: #3a5f7f;
+  color: #ffffff;
+  border-color: #ffd700;
+}
+
+.mode-button:active {
+  transform: scale(0.95);
+}
+
+/* Dropdown styles */
+.dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #0a1420;
+  min-width: 140px;
+  border: 1px solid #3a5f7f;
+  border-radius: 4px;
+  padding: 0px 0;
+  z-index: 1000;
+  margin-top: 0px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.dropdown:hover .dropdown-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Dropdown items - FIXED CENTERING */
+.dropdown-content .mode-button {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 6px 12px;
+  width: 100%;
+  font-size: 11px;
+  min-height: 32px;
+  
+  /* CENTERING FIXES */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+@media (min-width: 768px) {
+  .dropdown-content .mode-button {
+    font-size: 11px;
+    padding: 5px 12px;
+    min-height: 28px;
+  }
+}
+
+.dropdown-content .mode-button:hover {
+  background: #1a2f3f;
+  color: #ffd700;
+}
+
+.dropdown-content .mode-button.active {
+  background: #3a5f7f;
+  color: #ffffff;
+  border-left: 2px solid #ffd700;
+}
+
+/* Mobile dropdown */
+@media (max-width: 768px) {
+  .dropdown-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 180px;
+    max-width: 90%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+  
+  .dropdown-content .mode-button {
+    text-align: center;
+    padding: 10px;
+    justify-content: center; /* Center on mobile */
+  }
+}
+
+/* Separator */
+.mode-separator {
+  color: #3a5f7f;
+  font-size: 14px;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+  opacity: 0.7;
+  animation: pulse-separator 2s infinite;
+}
+
+@keyframes pulse-separator {
+  0% { opacity: 0.3; }
+  50% { opacity: 1; }
+  100% { opacity: 0.3; }
+}
+
+@media (max-width: 768px) {
+  .mode-separator {
+    margin: 5px 0;
+    transform: rotate(90deg);
+    font-size: 16px;
+  }
+}
+
+/* Music control */
+.music-control-container {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  display: inline-flex;
+  width: max-content;
+  z-index: 500;
+}
+
+@media (max-width: 767px) {
+  .music-control-container {
+    position: static;
+    transform: none;
+    margin: 10px auto 0;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Music button - FIXED CENTERING */
+.music-button {
+  background: transparent;
+  border: 1px solid #3a5f7f;
+  color: #00ff4c;
+  padding: 6px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  transition: all 0.3s ease;
+  min-width: 120px;
+  
+  /* CENTERING FIXES */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 36px;
+}
+
+.music-button:hover {
+  border-color: #ffd700;
+  color: #ffd700;
+}
+
+.music-button.playing {
+  border-color: #15bb03;
+  color: #15bb03;
+  animation: pulse 2s infinite;
+}
+
+.music-icon {
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(21, 187, 3, 0.4); }
+  70% { box-shadow: 0 0 0 5px rgba(21, 187, 3, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(21, 187, 3, 0); }
+}
+
+.volume-slider-container {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 5px;
+  background: #1a2f3f;
+  border: 1px solid #3a5f7f;
+  border-radius: 4px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 1000;
+  width: max-content;
+  min-width: 150px;
+}
+
+@media (max-width: 767px) {
+  .volume-slider-container {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 250px;
+  }
+}
+
+.volume-slider {
+  flex: 1;
+  height: 6px;
+  -webkit-appearance: none;
+  background: #3a5f7f;
+  border-radius: 3px;
+  outline: none;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #ffd700;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  background: #15bb03;
+}
+
+.volume-value {
+  color: #ffd700;
+  font-size: 12px;
+  min-width: 40px;
+  text-align: right;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .mode-button {
+    font-size: 10px;
+    padding: 6px 8px;
+    min-height: 32px;
+  }
+  
+  .music-button {
+    min-width: 100px;
+    padding: 8px 12px;
+    min-height: 40px;
+  }
+}
+

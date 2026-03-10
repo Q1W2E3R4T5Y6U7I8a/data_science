@@ -1,7 +1,17 @@
 // CodInfo.js
 import React, { useState, useEffect, useRef } from 'react';
 
-const CodInfo = () => {
+const CodInfo = ({ 
+  gdpData, 
+  casualtyData, 
+  setSelected, 
+  setMapMode, 
+  mapMode,
+  setCasualtyField,
+  casualtyField,
+  countryRankMap,
+  areaData // if available
+}) => {
   const [currentTime, setCurrentTime] = useState('');
   const [ipAddress, setIpAddress] = useState('');
   const [country, setCountry] = useState('');
@@ -25,9 +35,23 @@ const CodInfo = () => {
   const [commandHistory, setCommandHistory] = useState([]);
   const [currentCommand, setCurrentCommand] = useState('');
   const [commandOutput, setCommandOutput] = useState([]);
+  const [isMobile, setIsMobile] = useState(false);
   
   const inputRef = useRef(null);
   const audioContextRef = useRef(null);
+
+  // Check if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Toggle visibility
   const toggleVisibility = () => {
@@ -90,6 +114,94 @@ const CodInfo = () => {
     osc.stop(now + 0.04);
   };
 
+  // Format number with commas
+  const formatNumber = (num) => {
+    if (num === undefined || num === null) return 'N/A';
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
+  // Find best match for country name (case-insensitive, partial)
+  const findCountry = (input) => {
+    const lowerInput = input.toLowerCase();
+    // Try exact match first
+    for (let name of Object.keys(gdpData)) {
+      if (name.toLowerCase() === lowerInput) return name;
+    }
+    for (let name of Object.keys(casualtyData)) {
+      if (name.toLowerCase() === lowerInput) return name;
+    }
+    // Then partial match
+    for (let name of Object.keys(gdpData)) {
+      if (name.toLowerCase().includes(lowerInput)) return name;
+    }
+    for (let name of Object.keys(casualtyData)) {
+      if (name.toLowerCase().includes(lowerInput)) return name;
+    }
+    return null;
+  };
+
+  // Get country data based on current mode
+  const getCountryValue = (countryName) => {
+    if (mapMode === 'gdp') {
+      return gdpData[countryName];
+    } else if (mapMode === 'area') {
+      return areaData ? areaData[countryName] : null;
+    } else if (mapMode === 'casualty') {
+      const data = casualtyData[countryName];
+      if (!data) return null;
+      if (casualtyField === 'total') return data.total;
+      if (casualtyField === 'percent') return data.percent;
+      if (casualtyField === 'civilian') {
+        // sum civilian military and famine
+        const parse = (v) => {
+          if (typeof v === 'number') return v;
+          if (typeof v === 'string') {
+            const num = parseFloat(v.replace(/[^0-9.]/g, ''));
+            return isNaN(num) ? 0 : num;
+          }
+          return 0;
+        };
+        return parse(data.civilianMilitary) + parse(data.civilianFamine);
+      }
+    }
+    return null;
+  };
+
+  // Get rank of a country in current metric
+  const getRank = (countryName) => {
+    if (mapMode === 'gdp') {
+      return countryRankMap[countryName];
+    } else if (mapMode === 'area') {
+      // need area rank map – you could compute it similarly
+      return null;
+    } else if (mapMode === 'casualty') {
+      // compute rank on the fly from casualtyData
+      const entries = Object.entries(casualtyData)
+        .map(([name, data]) => {
+          let val;
+          if (casualtyField === 'total') val = data.total;
+          else if (casualtyField === 'percent') val = data.percent;
+          else if (casualtyField === 'civilian') {
+            const parse = (v) => {
+              if (typeof v === 'number') return v;
+              if (typeof v === 'string') {
+                const num = parseFloat(v.replace(/[^0-9.]/g, ''));
+                return isNaN(num) ? 0 : num;
+              }
+              return 0;
+            };
+            val = parse(data.civilianMilitary) + parse(data.civilianFamine);
+          }
+          return { name, val: typeof val === 'number' ? val : 0 };
+        })
+        .filter(e => e.val > 0)
+        .sort((a, b) => b.val - a.val);
+      const index = entries.findIndex(e => e.name === countryName);
+      return index === -1 ? null : index + 1;
+    }
+    return null;
+  };
+
   // Handle command input
   const handleCommandChange = (e) => {
     setCurrentCommand(e.target.value);
@@ -104,41 +216,238 @@ const CodInfo = () => {
       playTypingSound(char);
     }
 
-    // Process command
-    const cmd = currentCommand.toLowerCase().trim();
+    const fullCmd = currentCommand.trim();
+    const args = fullCmd.split(/\s+/);
+    const cmd = args[0].toLowerCase();
     let output = '';
 
-    switch(cmd) {
+    // Command implementations
+    switch (cmd) {
       case 'help':
-        output = 'Available commands: help, clear, status, time, system, echo [text], hide, show';
+        output = `
+Available commands:
+  help                          - Show this help
+  clear                         - Clear terminal
+  hide / show                   - Minimize/restore terminal
+  select <country>              - Select a country on map
+  stats <country>               - Show detailed stats and rank for a country
+  top <metric> [n=10]           - List top n countries by metric (gdp, area, total, percent, civilian)
+  mode <mode>                   - Switch map mode (default, gdp, area, casualty)
+  field <field>                 - In casualty mode, set field (total, percent, civilian)
+  clear-select                  - Clear selected country
+  time / system / status        - System info
+  echo <text>                   - Echo text
+        `;
         break;
-      case 'status':
-        output = `System status: ONLINE | Uptime: ${currentTime} | Connection: SECURE`;
-        break;
-      case 'time':
-        output = `Current ZULU time: ${currentTime}`;
-        break;
-      case 'system':
-        output = `OS: ${os} | Browser: ${browser} v${browserVersion} | Device: ${deviceType}`;
-        break;
-      case 'hide':
-        toggleVisibility();
-        output = 'Terminal minimized...';
-        break;
-      case 'show':
-        if (!isVisible) toggleVisibility();
-        output = 'Terminal restored';
-        break;
+
       case 'clear':
         setCommandOutput([]);
         setCurrentCommand('');
         return;
-      default:
-        if (cmd.startsWith('echo ')) {
-          output = cmd.substring(5);
-        } else {
-          output = `Unknown command: "${cmd}". Type "help" for available commands.`;
+
+      case 'hide':
+        toggleVisibility();
+        output = 'Terminal minimized. Use "show" to restore.';
+        break;
+
+      case 'show':
+        if (!isVisible) toggleVisibility();
+        output = 'Terminal restored.';
+        break;
+
+      case 'select': {
+        if (args.length < 2) {
+          output = 'Usage: select <country name>';
+          break;
         }
+        const countryInput = args.slice(1).join(' ');
+        const countryName = findCountry(countryInput);
+        if (!countryName) {
+          output = `Country "${countryInput}" not found.`;
+          break;
+        }
+        let selectedData;
+        if (mapMode === 'casualty') {
+          selectedData = casualtyData[countryName];
+          setSelected({ name: countryName, value: selectedData, type: 'casualty' });
+        } else if (mapMode === 'gdp') {
+          selectedData = gdpData[countryName];
+          setSelected({ name: countryName, value: selectedData, unit: 'T' });
+        } else if (mapMode === 'area') {
+          selectedData = areaData ? areaData[countryName] : null;
+          setSelected({ name: countryName, value: selectedData, unit: 'M km²' });
+        } else {
+          // default mode: show GDP if available
+          selectedData = gdpData[countryName];
+          setSelected({ name: countryName, value: selectedData, unit: 'T' });
+        }
+        output = `Selected: ${countryName}`;
+        break;
+      }
+
+      case 'stats': {
+        if (args.length < 2) {
+          output = 'Usage: stats <country name>';
+          break;
+        }
+        const countryInput = args.slice(1).join(' ');
+        const countryName = findCountry(countryInput);
+        if (!countryName) {
+          output = `Country "${countryInput}" not found.`;
+          break;
+        }
+        const gdp = gdpData[countryName];
+        const casualty = casualtyData[countryName];
+        const rank = countryRankMap[countryName];
+        output = `
+${countryName}:
+  GDP: ${gdp ? '$' + formatNumber(gdp) + 'B' : 'N/A'} (Rank: ${rank || 'N/A'})
+  Area: ${areaData && areaData[countryName] ? areaData[countryName] + 'M km²' : 'N/A'}
+  WWII Casualties:
+    Total: ${casualty ? casualty.total : 'N/A'}
+    % of 1939 pop: ${casualty ? casualty.percent + '%' : 'N/A'}
+    Civilian (military): ${casualty ? casualty.civilianMilitary : 'N/A'}
+    Civilian (famine): ${casualty ? casualty.civilianFamine : 'N/A'}
+        `;
+        break;
+      }
+
+      case 'rank': {
+        if (args.length < 2) {
+          output = 'Usage: rank <country name>';
+          break;
+        }
+        const countryInput = args.slice(1).join(' ');
+        const countryName = findCountry(countryInput);
+        if (!countryName) {
+          output = `Country "${countryInput}" not found.`;
+          break;
+        }
+        const rank = getRank(countryName);
+        if (rank === null) {
+          output = `Rank not available for ${countryName} in current mode.`;
+        } else {
+          output = `${countryName} is ranked #${rank} in current metric.`;
+        }
+        break;
+      }
+
+      case 'top': {
+        let metric = args[1] ? args[1].toLowerCase() : null;
+        let n = args[2] ? parseInt(args[2], 10) : 10;
+        if (isNaN(n) || n <= 0) n = 10;
+        if (n > 50) n = 50;
+
+        let entries = [];
+        if (metric === 'gdp') {
+          entries = Object.entries(gdpData)
+            .filter(([_, val]) => typeof val === 'number')
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, n);
+        } else if (metric === 'area' && areaData) {
+          entries = Object.entries(areaData)
+            .filter(([_, val]) => typeof val === 'number')
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, n);
+        } else if (metric === 'total' || metric === 'percent' || metric === 'civilian') {
+          // casualty metrics
+          entries = Object.entries(casualtyData)
+            .map(([name, data]) => {
+              let val;
+              if (metric === 'total') val = data.total;
+              else if (metric === 'percent') val = data.percent;
+              else if (metric === 'civilian') {
+                const parse = (v) => {
+                  if (typeof v === 'number') return v;
+                  if (typeof v === 'string') {
+                    const num = parseFloat(v.replace(/[^0-9.]/g, ''));
+                    return isNaN(num) ? 0 : num;
+                  }
+                  return 0;
+                };
+                val = parse(data.civilianMilitary) + parse(data.civilianFamine);
+              }
+              return { name, val: typeof val === 'number' ? val : 0 };
+            })
+            .filter(e => e.val > 0)
+            .sort((a, b) => b.val - a.val)
+            .slice(0, n);
+        } else {
+          // default to current map mode metric
+          if (mapMode === 'gdp') metric = 'gdp';
+          else if (mapMode === 'area') metric = 'area';
+          else if (mapMode === 'casualty') metric = casualtyField;
+          else metric = 'gdp'; // fallback
+          // recurse with inferred metric
+          return handleCommandSubmit({
+            preventDefault: () => {},
+            target: { value: `top ${metric} ${n}` }
+          });
+        }
+
+        if (entries.length === 0) {
+          output = `No data for metric "${metric}".`;
+        } else {
+          output = `Top ${entries.length} by ${metric}:\n` + 
+            entries.map((e, i) => `  ${i+1}. ${e.name}: ${typeof e[1] === 'number' ? formatNumber(e[1]) : e.val}`).join('\n');
+        }
+        break;
+      }
+
+      case 'mode': {
+        if (args.length < 2) {
+          output = 'Usage: mode <default|gdp|area|casualty>';
+          break;
+        }
+        const mode = args[1].toLowerCase();
+        if (['default', 'gdp', 'area', 'casualty'].includes(mode)) {
+          setMapMode(mode);
+          output = `Map mode switched to ${mode}.`;
+        } else {
+          output = `Invalid mode. Choose from: default, gdp, area, casualty.`;
+        }
+        break;
+      }
+
+      case 'field': {
+        if (args.length < 2) {
+          output = 'Usage: field <total|percent|civilian>';
+          break;
+        }
+        const field = args[1].toLowerCase();
+        if (['total', 'percent', 'civilian'].includes(field)) {
+          setCasualtyField(field);
+          setMapMode('casualty'); // ensure we're in casualty mode
+          output = `Casualty field set to ${field}.`;
+        } else {
+          output = `Invalid field. Choose from: total, percent, civilian.`;
+        }
+        break;
+      }
+
+      case 'clear-select':
+        setSelected(null);
+        output = 'Selection cleared.';
+        break;
+
+      case 'time':
+        output = `Current ZULU time: ${currentTime}`;
+        break;
+
+      case 'system':
+        output = `OS: ${os} | Browser: ${browser} v${browserVersion} | Device: ${deviceType}`;
+        break;
+
+      case 'status':
+        output = `System status: ONLINE | Uptime: ${currentTime} | Connection: SECURE | Map mode: ${mapMode}`;
+        break;
+
+      case 'echo':
+        output = args.slice(1).join(' ') || '';
+        break;
+
+      default:
+        output = `Unknown command: "${cmd}". Type "help" for available commands.`;
     }
 
     setCommandHistory([...commandHistory, currentCommand]);
@@ -279,7 +588,7 @@ const CodInfo = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // Prepare lines for typing animation
+  // Prepare lines for typing animation (now includes command prompt hint)
   useEffect(() => {
     if (currentTime && ipAddress && country && os && browser) {
       const lines = [
@@ -328,6 +637,11 @@ const CodInfo = () => {
     }
   }, [currentLineIndex, currentCharIndex, displayLines]);
 
+  // If on mobile, don't render anything
+  if (isMobile) {
+    return null;
+  }
+
   // If not visible, show only the minimized version
   if (!isVisible) {
     return (
@@ -346,7 +660,7 @@ const CodInfo = () => {
       <div className="cod-terminal">
         <div className="cod-header">
           <span className="cod-blink">●</span>
-          SYSTEM DIAGNOSTIC v2.3.7
+          MAP COMMAND CONSOLE v1.0
           <span className="cod-close" onClick={(e) => { e.stopPropagation(); toggleVisibility(); }}>[-]</span>
         </div>
         <div className="cod-content">
@@ -364,7 +678,7 @@ const CodInfo = () => {
           
           {/* Command Output History */}
           {commandOutput.map((line, index) => (
-            <div key={`output-${index}`} className={`cod-line ${index % 2 === 0 ? 'command' : 'output'}`}>
+            <div key={`output-${index}`} className={`cod-line ${index % 2 === 0 ? 'command' : 'output'}`} style={{ whiteSpace: 'pre-wrap' }}>
               {line}
             </div>
           ))}

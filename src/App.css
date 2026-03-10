@@ -1,52 +1,39 @@
 @import './style/CodInfo.css';
 @import './style/PrivacyPolicy.css';
 @import './style/country-colors.css';
+@import './style/PremiumPopup.css';
+@import './style/Header.css';
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+}
 
 .app {
   font-family: 'Courier New', monospace;
   background: #000000;
   color: #00ff4c;
   min-height: 100vh;
-  padding: 15px;
+  padding: 10px;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 2px solid #3a5f7f;
-  padding-bottom: 8px;
-  margin-bottom: 15px;
-  font-size: 14px;
-  letter-spacing: 1px;
-}
-
-.mode-switch {
-  display: inline-flex;
-  gap: 8px;
-  margin-left: 10px;
-}
-.mode-button {
-  cursor: pointer;
-  padding: 2px 6px;
-  border: 1px solid #3a5f7f;
-  border-radius: 4px;
-  font-size: 12px;
-
-}
-.mode-button.active {
-  background: #3a5f7f;
-}
-
+/* Map Container */
 .map-container {
   position: relative;
   border: 2px solid #3a5f7f;
   background: #ffffff;
-  overflow: hidden; /* keep scaled elements inside the box */
+  overflow: hidden;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  aspect-ratio: 2/1;
+}
+
+@media (max-width: 768px) {
+  .map-container {
+    aspect-ratio: 1/1;
+  }
 }
 
 .compass {
@@ -63,18 +50,32 @@
   font-size: 12px;
   color: #ffd700;
   background: #0a1420;
+  z-index: 10;
 }
 
+/* Target/Selected Info */
 .target {
   position: fixed;
   bottom: 20px;
   left: 20px;
+  right: 20px;
   background: #1a2f3f;
   border: 2px solid #ffd700;
-  padding: 12px;
-  min-width: 220px;
-  font-size: 13px;
+  padding: 15px;
+  min-width: auto;
+  font-size: 14px;
   box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  z-index: 100;
+}
+
+@media (min-width: 768px) {
+  .target {
+    left: 20px;
+    right: auto;
+    min-width: 220px;
+    font-size: 13px;
+    padding: 12px;
+  }
 }
 
 .close {
@@ -83,9 +84,157 @@
   right: 10px;
   cursor: pointer;
   color: #ffd700;
-  font-size: 16px;
+  font-size: 18px;
+  padding: 5px;
 }
 
+.close:active {
+  transform: scale(0.9);
+}
+
+/* Minimized Terminal */
+.cod-info-minimized {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  left: 20px;
+  z-index: 100;
+  font-family: 'Share Tech Mono', 'Courier New', monospace;
+  cursor: pointer;
+  animation: slideIn 0.5s ease-out;
+}
+
+@media (min-width: 768px) {
+  .cod-info-minimized {
+    left: auto;
+    right: 20px;
+  }
+}
+
+.cod-terminal-minimized {
+  background: rgba(0, 0, 0, 0.95);
+  border: 2px solid #3a5f7f;
+  border-radius: 8px;
+  padding: 12px 15px;
+  color: #00ff4c;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+}
+
+@media (min-width: 768px) {
+  .cod-terminal-minimized {
+    padding: 8px 15px;
+    justify-content: flex-start;
+  }
+}
+
+.cod-expand {
+  color: #ffd700;
+  font-weight: bold;
+  margin-left: auto;
+}
+
+.cod-close {
+  color: #ffd700;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 0 5px;
+}
+
+.cod-close:hover {
+  color: #ff3333;
+}
+
+.cod-close:active {
+  transform: scale(0.9);
+}
+
+/* Command Input Styles */
+.cod-command-line {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  padding-top: 5px;
+  border-top: 1px dashed #3a5f7f;
+}
+
+.cod-prompt {
+  color: #ffd700;
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+.cod-command-input {
+  background: transparent;
+  border: none;
+  color: #00ff4c;
+  font-family: 'Share Tech Mono', 'Courier New', monospace;
+  font-size: 14px;
+  flex: 1;
+  outline: none;
+  caret-color: #ffd700;
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .cod-command-input {
+    font-size: 12px;
+  }
+}
+
+.cod-command-input::placeholder {
+  color: #3a5f7f;
+  opacity: 0.5;
+}
+
+/* Command output styles */
+.cod-line.command {
+  color: #ffd700;
+}
+
+.cod-line.output {
+  color: #00ff4c;
+  margin-left: 15px;
+  opacity: 0.9;
+  word-break: break-word;
+}
+
+/* Hover effect for minimized terminal */
+.cod-info-minimized:hover .cod-terminal-minimized {
+  border-color: #ffd700;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+}
+
+/* Target display for casualty data */
+.target .casualty-detail {
+  font-size: 11px;
+  margin: 3px 0;
+  color: #ffaa00;
+}
+
+.target .casualty-total {
+  color: #ff0000;
+  font-weight: bold;
+}
+
+.target .casualty-percent {
+  color: #ffaa00;
+}
+
+.target .casualty-military {
+  color: #00aaff;
+}
+
+.target .casualty-famine {
+  color: #aa00ff;
+}
+
+/* Loading state */
 .loading {
   display: flex;
   justify-content: center;
@@ -93,121 +242,68 @@
   height: 100vh;
   background: #0a1420;
   color: #ffd700;
-  font-size: 18px;
+  font-size: 16px;
+  text-align: center;
+  padding: 20px;
 }
 
-/* Add to your existing App.css */
-
-/* Music Control Styles */
-.music-control-container {
-  position: relative;
-  display: inline-block;
-  margin-right: 10px;
-}
-
-.music-button {
-  background: transparent;
-  border: 1px solid #3a5f7f;
-  color: #00ff4c;
-  padding: 4px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: 'Courier New', monospace;
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.3s ease;
-}
-
-.music-button:hover {
-  border-color: #ffd700;
-  color: #ffd700;
-}
-
-.music-button.playing {
-  border-color: #15bb03;
-  color: #15bb03;
-  animation: pulse 2s infinite;
-}
-
-.music-icon {
-  font-size: 14px;
-}
-
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(21, 187, 3, 0.4);
-  }
-  70% {
-    box-shadow: 0 0 0 5px rgba(21, 187, 3, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(21, 187, 3, 0);
+@media (min-width: 768px) {
+  .loading {
+    font-size: 18px;
   }
 }
 
-.volume-slider-container {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: 5px;
-  background: #1a2f3f;
-  border: 1px solid #3a5f7f;
-  border-radius: 4px;
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  z-index: 1000;
-  min-width: 150px;
+/* Touch-friendly improvements */
+@media (max-width: 768px) {
+  .mode-button,
+  .music-button,
+  .privacy-button,
+  .cod-expand,
+  .cod-close,
+  .close {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .volume-slider::-webkit-slider-thumb {
+    width: 20px;
+    height: 20px;
+  }
 }
 
-.volume-slider {
-  flex: 1;
-  height: 4px;
-  -webkit-appearance: none;
-  background: #3a5f7f;
-  border-radius: 2px;
-  outline: none;
+/* Desktop override */
+@media (min-width: 769px) {
+  .mode-button,
+  .music-button,
+  .privacy-button,
+  .cod-expand,
+  .cod-close,
+  .close {
+    min-height: auto;
+  }
 }
 
-.volume-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
-  background: #ffd700;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.2s ease;
+/* Prevent overflow on very small screens */
+@media (max-width: 480px) {
+  .app {
+    padding: 8px;
+  }
+  
+  .target {
+    font-size: 12px;
+    padding: 12px;
+  }
 }
 
-.volume-slider::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
-  background: #15bb03;
-}
-
-.volume-value {
-  color: #ffd700;
-  font-size: 11px;
-  min-width: 35px;
-  text-align: right;
-}
-
-/* Update header to accommodate music control */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 2px solid #3a5f7f;
-  padding-bottom: 8px;
-  margin-bottom: 15px;
-  font-size: 14px;
-  letter-spacing: 1px;
-}
-
-.mode-switch {
-  display: inline-flex;
-  gap: 8px;
-  margin-left: 10px;
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }

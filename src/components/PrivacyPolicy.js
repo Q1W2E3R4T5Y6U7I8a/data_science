@@ -22,13 +22,26 @@ const PrivacyPolicy = ({ onAccept }) => {
         
         <div className="privacy-content">
           <div className="privacy-message">
-
-            <p>By proceeding, you acknowledge and agree to:</p>
-          </div>
+  <p>SYSTEM NOTICE</p>
+  <p>This website collects basic usage data including:</p>
+  <div className="privacy-list">
+    <div className="privacy-item">• IP address and location (city/country)</div>
+    <div className="privacy-item">• Device type and browser information</div>
+    <div className="privacy-item">• Screen resolution and operating system</div>
+    <div className="privacy-item">• Basic interaction data for analytics</div>
+  </div>
+  <p>This data is used solely for:</p>
+  <div className="privacy-list">
+    <div className="privacy-item">✓ Improving user experience</div>
+    <div className="privacy-item">✓ Website analytics and performance</div>
+    <div className="privacy-item">✓ Technical troubleshooting</div>
+  </div>
+  <p>No personal identifying information is sold or shared with third parties.</p>
+</div>
           
           <div className="privacy-policy-link">
             <a 
-              href="https://docs.google.com/document/d/YOUR_DOCUMENT_ID/edit" 
+              href="https://docs.google.com/document/d/1RFdlGEqMC6ttvscBnjBiU3pQ-BU1Dmtmp3jTH4wkErA/edit?usp=sharing" 
               target="_blank" 
               rel="noopener noreferrer"
               className="privacy-link"

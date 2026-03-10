@@ -1,0 +1,254 @@
+.premium-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.3s ease;
+}
+
+.premium-popup {
+  background: #0a1420;
+  border: 3px solid #ffd700;
+  border-radius: 12px;
+  padding: 30px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  color: #00ff4c;
+  font-family: 'Courier New', monospace;
+  box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
+  animation: slideUp 0.4s ease;
+}
+
+.premium-popup-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: #ffd700;
+  font-size: 28px;
+  cursor: pointer;
+  padding: 5px 10px;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.premium-popup-close:hover {
+  transform: scale(1.2);
+  color: #ff0000;
+}
+
+.premium-popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #3a5f7f;
+  padding-bottom: 15px;
+}
+
+.premium-popup-header h2 {
+  color: #ffd700;
+  font-size: 24px;
+  letter-spacing: 2px;
+  margin: 0;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.premium-icon {
+  color: #ffd700;
+  font-size: 24px;
+  animation: pulse 2s infinite;
+}
+
+.premium-message {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 25px;
+  color: #00ff4c;
+}
+
+.premium-highlight {
+  color: #ffd700;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-shadow: 0 0 5px #ffd700;
+}
+
+.premium-options {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-bottom: 25px;
+}
+
+.premium-option {
+  background: rgba(58, 95, 127, 0.2);
+  border: 1px solid #3a5f7f;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.premium-option h3 {
+  color: #ffd700;
+  font-size: 16px;
+  margin: 0 0 10px 0;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.premium-option p {
+  color: #00ff4c;
+  font-size: 14px;
+  margin: 0 0 15px 0;
+  text-align: center;
+  opacity: 0.9;
+}
+
+.premium-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.premium-button {
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  min-width: 140px;
+}
+
+.premium-button.patreon {
+  background: #F96854;
+  color: white;
+  border-color: #F96854;
+}
+
+.premium-button.paypal {
+  background: #003087;
+  color: white;
+  border-color: #003087;
+}
+
+.premium-button.card {
+  background: #00a86b;
+  color: white;
+  border-color: #00a86b;
+}
+
+.premium-button.ukraine {
+  background: #0057b7;
+  color: #ffd700;
+  border-color: #ffd700;
+  text-transform: uppercase;
+}
+
+.premium-button.copy-link {
+  background: #4a4a4a;
+  color: #00ff4c;
+  border-color: #00ff4c;
+}
+
+.premium-button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.2);
+  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+}
+
+.premium-button:active {
+  transform: translateY(0);
+}
+
+.premium-note {
+  font-size: 12px !important;
+  color: #ffd700 !important;
+  margin-top: 15px !important;
+  font-style: italic;
+}
+
+.premium-divider {
+  text-align: center;
+  margin: 20px 0;
+  color: #3a5f7f;
+  font-size: 20px;
+  letter-spacing: 5px;
+}
+
+.premium-instructions {
+  background: #1a2f3f;
+  border-radius: 6px;
+  padding: 15px;
+  font-size: 13px;
+  color: #00ff4c;
+}
+
+.premium-instructions p {
+  margin: 5px 0;
+  padding-left: 10px;
+  border-left: 2px solid #ffd700;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .premium-popup {
+    padding: 20px;
+    width: 95%;
+  }
+  
+  .premium-popup-header h2 {
+    font-size: 18px;
+  }
+  
+  .premium-links {
+    flex-direction: column;
+  }
+  
+  .premium-button {
+    width: 100%;
+  }
+  
+  .premium-option h3 {
+    font-size: 14px;
+  }
+}

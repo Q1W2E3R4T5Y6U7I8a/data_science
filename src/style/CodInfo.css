@@ -1,4 +1,10 @@
-/* Add to your existing App.css */
+@media (max-width: 768px) {
+  .cod-info,
+  .cod-info-minimized {
+    display: none !important;
+  }
+}
+
 
 /* Minimized Terminal */
 .cod-info-minimized {
