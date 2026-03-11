@@ -1,7 +1,6 @@
-// components/PrivacyPolicy.js
 import React, { useState } from 'react';
 
-const PrivacyPolicy = ({ onAccept }) => {
+const PrivacyPolicy = ({ onAccept, t }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   const handleAccept = () => {
@@ -16,28 +15,27 @@ const PrivacyPolicy = ({ onAccept }) => {
       <div className="privacy-modal">
         <div className="privacy-header">
           <span className="privacy-blink">●</span>
-
           <span className="privacy-blink">●</span>
         </div>
         
         <div className="privacy-content">
           <div className="privacy-message">
-  <p>SYSTEM NOTICE</p>
-  <p>This website collects basic usage data including:</p>
-  <div className="privacy-list">
-    <div className="privacy-item">• IP address and location (city/country)</div>
-    <div className="privacy-item">• Device type and browser information</div>
-    <div className="privacy-item">• Screen resolution and operating system</div>
-    <div className="privacy-item">• Basic interaction data for analytics</div>
-  </div>
-  <p>This data is used solely for:</p>
-  <div className="privacy-list">
-    <div className="privacy-item">✓ Improving user experience</div>
-    <div className="privacy-item">✓ Website analytics and performance</div>
-    <div className="privacy-item">✓ Technical troubleshooting</div>
-  </div>
-  <p>No personal identifying information is sold or shared with third parties.</p>
-</div>
+            <p>{t('systemNotice')}</p>
+            <p>{t('dataCollection')}</p>
+            <div className="privacy-list">
+              <div className="privacy-item">• {t('ipLocation')}</div>
+              <div className="privacy-item">• {t('deviceInfo')}</div>
+              <div className="privacy-item">• {t('screenResolution')}</div>
+              <div className="privacy-item">• {t('interactionData')}</div>
+            </div>
+            <p>{t('dataUsage')}</p>
+            <div className="privacy-list">
+              <div className="privacy-item">✓ {t('improveExperience')}</div>
+              <div className="privacy-item">✓ {t('analytics')}</div>
+              <div className="privacy-item">✓ {t('troubleshooting')}</div>
+            </div>
+            <p>{t('privacyGuarantee')}</p>
+          </div>
           
           <div className="privacy-policy-link">
             <a 
@@ -46,20 +44,20 @@ const PrivacyPolicy = ({ onAccept }) => {
               rel="noopener noreferrer"
               className="privacy-link"
             >
-              [ VIEW FULL PRIVACY PROTOCOL ]
+              [ {t('viewFullPrivacy')} ]
             </a>
           </div>
           
           <div className="privacy-footer">
             <button className="privacy-button accept" onClick={handleAccept}>
-              ▸ ACCEPT & PROCEED
+              ▸ {t('acceptProceed')}
             </button>
           </div>
         </div>
         
         <div className="privacy-terminal-footer">
-          <span>ENCRYPTED CONNECTION</span>
-          <span className="privacy-status">AWAITING AUTHORIZATION</span>
+          <span>{t('encryptedConnection')}</span>
+          <span className="privacy-status">{t('awaitingAuth')}</span>
         </div>
       </div>
     </div>

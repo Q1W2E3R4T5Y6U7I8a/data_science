@@ -1,40 +1,45 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ComposableMap, Geographies } from 'react-simple-maps';
-import { geoEqualEarth, geoPath } from 'd3-geo';
-import { getFlagColor, getArea, hasAreaData, formatArea, formatGDP } from './countryUtils';
+import { geoEqualEarth } from 'd3-geo';
+import { getFlagColor, formatArea, formatGDP } from './countryUtils';
+import useLocalization from './hooks/userLocalisation';
+import Header from './components/Header';
+import { formatNumber, formatCurrency } from './utils/localeFormatter';
 import CodInfo from './components/CodInfo';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import DefaultMap from './components/maps/DefaultMap';
 import GDPMap from './components/maps/GDPMap';
+import PopulationMap from './components/maps/PopulationMap';
 import AreaMap from './components/maps/AreaMap';
 import WW2Map from './components/maps/WW2Map';
 import PremiumPopup from './components/PremiumPopup';
 import CASUALTY_DATA from './components/maps/WW2Map';
+import POPULATION_DATA from '../src/data/populationData';
 
 import './App.css';
 
 function App() {
+  const { t, language } = useLocalization();
   const [gdpData, setGdpData] = useState({});
   const [showPremiumPopup, setShowPremiumPopup] = useState(false);
-const [premiumFeature, setPremiumFeature] = useState(null);
+  const [premiumFeature, setPremiumFeature] = useState(null);
   const [selected, setSelected] = useState(null);
   const [mapMode, setMapMode] = useState('default');
+  const [populationView, setPopulationView] = useState('total');
   const [countryColors, setCountryColors] = useState({});
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [musicVolume, setMusicVolume] = useState(50);
   const [colorMode, setColorMode] = useState('flag');
   const [showMusicControls, setShowMusicControls] = useState(false);
-  const [casualtyField, setCasualtyField] = useState('total'); // metric for WW2 map: total, percent or civilian deaths
+  const [casualtyField, setCasualtyField] = useState('total');
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [geographies, setGeographies] = useState([]);
   const [countryRankMap, setCountryRankMap] = useState({});
 
   const audioRef = useRef(null);
   const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
-
   const publicUrl = process.env.PUBLIC_URL || '';
 
-  // Initialize audio
   useEffect(() => {
     audioRef.current = new Audio(publicUrl + '/music_menu.mp3');
     audioRef.current.loop = true;
@@ -48,7 +53,6 @@ const [premiumFeature, setPremiumFeature] = useState(null);
     };
   }, []);
 
-  // Update volume when changed
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = musicVolume / 100;
@@ -157,7 +161,9 @@ const [premiumFeature, setPremiumFeature] = useState(null);
             countryColors={countryColors}
             setSelected={setSelected}
             getCountryColor={getCountryColor}
-            colorMode={colorMode}    
+            colorMode={colorMode}
+            t={t}
+            language={language}
           />
         );
       case 'area':
@@ -167,7 +173,22 @@ const [premiumFeature, setPremiumFeature] = useState(null);
             countryColors={countryColors}
             setSelected={setSelected}
             getCountryColor={getCountryColor}
-            colorMode={colorMode}    
+            colorMode={colorMode}
+            t={t}
+            language={language}
+          />
+        );
+      case 'population':
+        return (
+          <PopulationMap 
+            geographies={geographies}
+            countryColors={countryColors}
+            setSelected={setSelected}
+            getCountryColor={getCountryColor}
+            colorMode={colorMode}
+            populationView={populationView}
+            t={t}
+            populationData={POPULATION_DATA}
           />
         );
       case 'casualty':
@@ -179,6 +200,8 @@ const [premiumFeature, setPremiumFeature] = useState(null);
             getCountryColor={getCountryColor}
             colorMode={colorMode}
             field={casualtyField}
+            t={t}
+            language={language}
           />
         );
       default:
@@ -189,7 +212,9 @@ const [premiumFeature, setPremiumFeature] = useState(null);
             countryColors={countryColors}
             setSelected={setSelected}
             getCountryColor={getCountryColor}
-            colorMode={colorMode}    
+            colorMode={colorMode}
+            t={t}
+            language={language}
           />
         );
     }
@@ -197,214 +222,29 @@ const [premiumFeature, setPremiumFeature] = useState(null);
 
   return (
     <>
-      {!privacyAccepted && <PrivacyPolicy onAccept={handlePrivacyAccept} />}
+      {!privacyAccepted && <PrivacyPolicy onAccept={handlePrivacyAccept} t={t} />}
       
       {privacyAccepted && (
         <div className="app">
-        <div className="header">
-  <div className="mode-controls">
-    <div className="mode-switch">
-      <span
-        className={mapMode === 'default' ? 'mode-button active' : 'mode-button'}
-        onClick={() => setMapMode('default')}
-      >DEFAULT</span>
-      <span
-        className={mapMode === 'gdp' ? 'mode-button active' : 'mode-button'}
-        onClick={() => setMapMode('gdp')}
-      >GDP</span>
-      <span
-        className={mapMode === 'area' ? 'mode-button active' : 'mode-button'}
-        onClick={() => setMapMode('area')}
-      >REAL SIZE</span>
-      
-      {/* WW2 Dropdown */}
-      <div className="dropdown">
-        <span
-          className={mapMode === 'casualty' ? 'mode-button active casualty' : 'mode-button casualty'}
-        >WW2</span>
-        <div className="dropdown-content">
-          <span 
-            onClick={() => { 
-              setMapMode('casualty'); 
-              setCasualtyField('total'); 
-            }} 
-            className={`mode-button ${mapMode === 'casualty' && casualtyField === 'total' ? 'active' : ''}`}
-          >
-            TOTAL DEATHS
-          </span>
-          <span 
-            onClick={() => { 
-              setMapMode('casualty'); 
-              setCasualtyField('civilian'); 
-            }} 
-            className={`mode-button ${mapMode === 'casualty' && casualtyField === 'civilian' ? 'active' : ''}`}
-          >
-            CIVILIAN
-          </span>
-          <span 
-            onClick={() => { 
-              setMapMode('casualty'); 
-              setCasualtyField('percent'); 
-            }} 
-            className={`mode-button ${mapMode === 'casualty' && casualtyField === 'percent' ? 'active' : ''}`}
-          >
-            PERCENT OF POPULATION
-          </span>
-        </div>
-      </div>
-      
-      {/* Ukraine-Russia War Dropdown */}
-      <div className="dropdown mode-button">UKRAINE-RUSSIA WAR
-        <div className="dropdown-content">
-          <span 
-            onClick={() => {
-              setPremiumFeature('war-total-casualties');
-              setShowPremiumPopup(true);
-            }} 
-            className="mode-button"
-          >
-            TOTAL CASUALTIES
-          </span>
-          <span 
-            onClick={() => {
-              setPremiumFeature('war-civilians');
-              setShowPremiumPopup(true);
-            }} 
-            className="mode-button"
-          >
-            CIVILIANS
-          </span>
-          <span 
-            onClick={() => {
-              setPremiumFeature('war-percent-population');
-              setShowPremiumPopup(true);
-            }} 
-            className="mode-button"
-          >
-            % OF POPULATION
-          </span>
-          <span 
-            onClick={() => {
-              setPremiumFeature('war-aid-to-ukraine');
-              setShowPremiumPopup(true);
-            }} 
-            className="mode-button"
-          >
-            $ AID TO UKRAINE
-          </span>
-          <span 
-            onClick={() => {
-              setPremiumFeature('war-aid-to-ukraine');
-              setShowPremiumPopup(true);
-            }} 
-            className="mode-button"
-          >
-            $ IN PARTNERSHIP WITH UA
-          </span>
-          <span 
-            onClick={() => {
-              setPremiumFeature('war-russia-business');
-              setShowPremiumPopup(true);
-            }} 
-            className="mode-button"
-          >
-            $ IN PARTNERSHIP WITH ru
-          </span>
-        </div>
-      </div>
-      
-      <div className="mode-separator">|||||</div>
-
-            {/* 2050 Dropdown */}
-      <div className="dropdown mode-button">2050
-        <div className="dropdown-content">
-          <span 
-            onClick={() => {
-              setPremiumFeature('2050-population');
-              setShowPremiumPopup(true);
-            }} 
-            className="mode-button"
-          >
-            EXPECTED POPULATION
-          </span>
-          <span 
-            onClick={() => {
-              setPremiumFeature('2050-gdp');
-              setShowPremiumPopup(true);
-            }} 
-            className="mode-button"
-          >
-            EXPECTED GDP
-          </span>
-        </div>
-      </div>
-      
-      {/* 2100 Dropdown */}
-      <div className="dropdown mode-button">2100
-        <div className="dropdown-content">
-          <span 
-            onClick={() => {
-              setPremiumFeature('2100-population');
-              setShowPremiumPopup(true);
-            }} 
-            className="mode-button"
-          >
-            EXPECTED POPULATION
-          </span>
-          <span 
-            onClick={() => {
-              setPremiumFeature('2100-gdp');
-              setShowPremiumPopup(true);
-            }} 
-            className="mode-button"
-          >
-            EXPECTED GDP
-          </span>
-        </div>
-      </div>
-
-      <div className="mode-separator">|||||</div>
-      
-      <div className="color-mode-switch">
-        <span 
-          className={colorMode === 'flag' ? 'mode-button active' : 'mode-button'}
-          onClick={() => setColorMode('flag')}
-        >FLAG</span>
-        <span 
-          className={colorMode === 'continent' ? 'mode-button active' : 'mode-button'}
-          onClick={() => setColorMode('continent')}
-        >CONTINENT</span>
-      </div>
-    </div>
-    
-    <div className="music-control-container">
-      <button 
-        className={`music-button ${isMusicPlaying ? 'playing' : ''}`}
-        onClick={toggleMusic}
-        onMouseEnter={() => setShowMusicControls(true)}
-        onMouseLeave={() => setShowMusicControls(false)}
-        onTouchStart={() => setShowMusicControls(!showMusicControls)}
-      >
-        <span className="music-icon">{isMusicPlaying ? '🔊' : '🔇'}</span>
-        <span className="music-text">{isMusicPlaying ? 'MUSIC ON' : 'MUSIC OFF'}</span>
-      </button>
-      
-      {showMusicControls && (
-        <div className="volume-slider-container">
-          <input
-            type="range"
-            min="0"
-            max="100"
-            value={musicVolume}
-            onChange={handleVolumeChange}
-            className="volume-slider"
+          <Header 
+            mapMode={mapMode}
+            setMapMode={setMapMode}
+            populationView={populationView}
+            setPopulationView={setPopulationView}
+            casualtyField={casualtyField}
+            setCasualtyField={setCasualtyField}
+            colorMode={colorMode}
+            setColorMode={setColorMode}
+            isMusicPlaying={isMusicPlaying}
+            toggleMusic={toggleMusic}
+            showMusicControls={showMusicControls}
+            setShowMusicControls={setShowMusicControls}
+            musicVolume={musicVolume}
+            handleVolumeChange={handleVolumeChange}
+            setPremiumFeature={setPremiumFeature}
+            setShowPremiumPopup={setShowPremiumPopup}
+            t={t}
           />
-          <span className="volume-value">{musicVolume}%</span>
-        </div>
-      )}
-    </div>
-  </div>
-</div>
 
           <div className="map-container">
             <ComposableMap projection="geoEqualEarth" width={1200} height={600}>
@@ -417,24 +257,32 @@ const [premiumFeature, setPremiumFeature] = useState(null);
                 }}
               </Geographies>
             </ComposableMap>
-            <div className="compass">N</div>
+            <div className="map-emblem">
+              <img src={`${publicUrl}/dumy_emblem.png`} alt="emblem" />
+            </div>
           </div>
 
           {selected && (
             <div className="target">
-              <div>TARGET: {selected.name}</div>
+              <div>{t('target')}: {selected.name}</div>
               {selected.type === 'casualty' ? (
                 <>
-                  <div>TOTAL DEATHS: {typeof selected.value.total === 'number' ? 
-                    new Intl.NumberFormat().format(selected.value.total) : selected.value.total}</div>
-                  <div>% OF 1939 POP: {selected.value.percent}%</div>
-                  <div>CIV (MIL): {selected.value.civilianMilitary}</div>
-                  <div>CIV (FAM): {selected.value.civilianFamine}</div>
+                  <div>{t('totalDeaths')}: {typeof selected.value.total === 'number' ? 
+                    formatNumber(selected.value.total, language) : selected.value.total}</div>
+                  <div>{t('percentOf1939Pop')}: {selected.value.percent}%</div>
+                  <div>{t('civMil')}: {selected.value.civilianMilitary}</div>
+                  <div>{t('civFam')}: {selected.value.civilianFamine}</div>
+                </>
+              ) : selected.type === 'population' ? (
+                <>
+                  <div>{t('populationTotal')}: {selected.value.total}</div>
+                  <div>{t('populationChangePercent')}: {selected.value.percentChange}</div>
+                  <div>{t('populationChangeAbsolute')}: {selected.value.absoluteChange}</div>
                 </>
               ) : (
                 <div>
-                  {mapMode === 'area' ? 'AREA: ' : 'GDP: '}
-                  {mapMode === 'area' ? formatArea(selected.value) : formatGDP(selected.value)}
+                  {mapMode === 'area' ? t('area') : t('gdpLabel')}: 
+                  {mapMode === 'area' ? formatArea(selected.value) : formatCurrency(selected.value, language)}
                 </div>
               )}
               <div className="close" onClick={() => setSelected(null)}>✕</div>
@@ -442,22 +290,26 @@ const [premiumFeature, setPremiumFeature] = useState(null);
           )}
           
           <CodInfo 
-              gdpData={gdpData}
-              casualtyData={CASUALTY_DATA} // you need to import this from WW2Map or define it in App
-              setSelected={setSelected}
-              setMapMode={setMapMode}
-              mapMode={mapMode}
-              setCasualtyField={setCasualtyField}
-              casualtyField={casualtyField}
-              countryRankMap={countryRankMap}
-            />
+            gdpData={gdpData}
+            casualtyData={CASUALTY_DATA}
+            setSelected={setSelected}
+            setMapMode={setMapMode}
+            mapMode={mapMode}
+            setCasualtyField={setCasualtyField}
+            casualtyField={casualtyField}
+            countryRankMap={countryRankMap}
+            t={t}
+            language={language}
+          />
+          
           <PremiumPopup 
             isOpen={showPremiumPopup}
             onClose={() => {
               setShowPremiumPopup(false);
-              setMapMode(mapMode); // Keep current mode but don't actually switch
+              setMapMode(mapMode);
             }}
             feature={premiumFeature}
+            t={t}
           />
         </div>
       )}

@@ -3,6 +3,7 @@
 @import './style/country-colors.css';
 @import './style/PremiumPopup.css';
 @import './style/Header.css';
+@import './style/LanguageSwitcher.css';
 
 * { 
   margin: 0; 
@@ -36,21 +37,26 @@
   }
 }
 
-.compass {
+.map-emblem {
   position: absolute;
   bottom: 10px;
   right: 10px;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
+  z-index: 10;
   border: 2px solid #ffd700;
   border-radius: 50%;
+  background: #0a1420;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
-  color: #ffd700;
-  background: #0a1420;
-  z-index: 10;
+  overflow: hidden;
+}
+
+.map-emblem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* Target/Selected Info */
@@ -92,22 +98,33 @@
   transform: scale(0.9);
 }
 
-/* Minimized Terminal */
+/* Minimized Terminal - Now on LEFT side */
 .cod-info-minimized {
   position: fixed;
   bottom: 20px;
-  right: 20px;
-  left: 20px;
+  left: 20px;  /* Changed from right: 20px to left: 20px */
+  right: auto; /* Added to override any right positioning */
   z-index: 100;
   font-family: 'Share Tech Mono', 'Courier New', monospace;
   cursor: pointer;
   animation: slideIn 0.5s ease-out;
+  max-width: 300px; /* Limit width on larger screens */
 }
 
 @media (min-width: 768px) {
   .cod-info-minimized {
-    left: auto;
-    right: 20px;
+    left: 20px;  /* Ensure it stays on left even on desktop */
+    right: auto;
+    max-width: 280px; /* Slightly smaller on desktop */
+  }
+}
+
+/* For very small screens, ensure it doesn't touch the edge too much */
+@media (max-width: 480px) {
+  .cod-info-minimized {
+    left: 10px;
+    right: 10px; /* Allow it to stretch on mobile for better readability */
+    max-width: none;
   }
 }
 
@@ -299,7 +316,7 @@
 
 @keyframes slideIn {
   from {
-    transform: translateX(100%);
+    transform: translateX(-100%); /* Changed from 100% to -100% for left slide */
     opacity: 0;
   }
   to {
@@ -307,3 +324,4 @@
     opacity: 1;
   }
 }
+

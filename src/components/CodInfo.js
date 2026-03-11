@@ -30,12 +30,13 @@ const CodInfo = ({
   const [displayLines, setDisplayLines] = useState([]);
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
-  const [isTyping, setIsTyping] = useState(true);
-  const [isVisible, setIsVisible] = useState(true);
+  const [isTyping, setIsTyping] = useState(false); // Start with false
+  const [isVisible, setIsVisible] = useState(false);
   const [commandHistory, setCommandHistory] = useState([]);
   const [currentCommand, setCurrentCommand] = useState('');
   const [commandOutput, setCommandOutput] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
+  const [hasInitialized, setHasInitialized] = useState(false); // Track if initial typing has started
   
   const inputRef = useRef(null);
   const audioContextRef = useRef(null);
@@ -235,6 +236,7 @@ Available commands:
   mode <mode>                   - Switch map mode (default, gdp, area, casualty)
   field <field>                 - In casualty mode, set field (total, percent, civilian)
   clear-select                  - Clear selected country
+  userinfo                      - Display user system information
   time / system / status        - System info
   echo <text>                   - Echo text
         `;
@@ -253,6 +255,26 @@ Available commands:
       case 'show':
         if (!isVisible) toggleVisibility();
         output = 'Terminal restored.';
+        break;
+
+      case 'userinfo':
+        output = `
+USER SYSTEM INFORMATION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  TIME: ${currentTime} ZULU
+  LOCATION: ${city}, ${region}, ${country}
+  IP ADDRESS: ${ipAddress}
+  ISP: ${isp}
+  TIMEZONE: ${timezone}
+  DEVICE: ${deviceType}
+  OS: ${os}
+  BROWSER: ${browser} v${browserVersion}
+  LANGUAGE: ${language}
+  RESOLUTION: ${screenResolution}
+  CONNECTION: ${connectionType}
+  USER AGENT: ${userAgent}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        `;
         break;
 
       case 'select': {
@@ -588,32 +610,25 @@ ${countryName}:
     return () => clearInterval(timer);
   }, []);
 
-  // Prepare lines for typing animation (now includes command prompt hint)
+  // Start typing animation when terminal becomes visible and data is ready
   useEffect(() => {
-    if (currentTime && ipAddress && country && os && browser) {
+    if (isVisible && !hasInitialized && displayLines.length === 0) {
+      // Minimal welcome message instead of full system info
       const lines = [
-        `> TIME: ${currentTime} ZULU`,
-        `> LOCATION: ${city}, ${region}, ${country}`,
-        `> IP ADDRESS: ${ipAddress}`,
-        `> ISP: ${isp}`,
-        `> TIMEZONE: ${timezone}`,
-        `> DEVICE: ${deviceType}`,
-        `> OS: ${os}`,
-        `> BROWSER: ${browser} v${browserVersion}`,
-        `> LANGUAGE: ${language}`,
-        `> RESOLUTION: ${screenResolution}`,
-        `> CONNECTION: ${connectionType}`,
-        `> USER AGENT: ${userAgent.substring(0, 40)}...`,
+        '> MAP COMMAND CONSOLE v1.0',
         '> SECURE LINK ESTABLISHED',
-        '> Type "help" for available commands'
+        '> Type "help" for available commands',
+        '> Type "userinfo" for system information'
       ];
       setDisplayLines(lines);
+      setHasInitialized(true);
+      setIsTyping(true);
     }
-  }, [currentTime, ipAddress, country, city, region, isp, timezone, os, browser, browserVersion, deviceType, screenResolution, language, connectionType, userAgent]);
+  }, [isVisible, hasInitialized, displayLines.length]);
 
-  // Typing animation effect with sound
+  // Typing animation effect with sound - 3x faster (from 40ms to 13ms, from 200ms to 67ms)
   useEffect(() => {
-    if (displayLines.length === 0) return;
+    if (!isTyping || displayLines.length === 0) return;
 
     if (currentLineIndex < displayLines.length) {
       const currentLine = displayLines[currentLineIndex];
@@ -623,19 +638,19 @@ ${countryName}:
           const ch = currentLine[currentCharIndex];
           playTypingSound(ch);
           setCurrentCharIndex(prev => prev + 1);
-        }, 40);
+        }, 13); // 3x faster (was 40ms)
         return () => clearTimeout(typingTimer);
       } else {
         const lineDelay = setTimeout(() => {
           setCurrentLineIndex(prev => prev + 1);
           setCurrentCharIndex(0);
-        }, 200);
+        }, 67); // 3x faster (was 200ms)
         return () => clearTimeout(lineDelay);
       }
     } else {
       setIsTyping(false);
     }
-  }, [currentLineIndex, currentCharIndex, displayLines]);
+  }, [currentLineIndex, currentCharIndex, displayLines, isTyping, playTypingSound]);
 
   // If on mobile, don't render anything
   if (isMobile) {
@@ -660,7 +675,6 @@ ${countryName}:
       <div className="cod-terminal">
         <div className="cod-header">
           <span className="cod-blink">●</span>
-          MAP COMMAND CONSOLE v1.0
           <span className="cod-close" onClick={(e) => { e.stopPropagation(); toggleVisibility(); }}>[-]</span>
         </div>
         <div className="cod-content">
