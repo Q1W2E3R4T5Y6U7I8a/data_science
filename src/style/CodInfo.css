@@ -1,20 +1,93 @@
-@media (max-width: 768px) {
-  .cod-info,
-  .cod-info-minimized {
-    display: none !important;
-  }
-}
-
-
-/* Minimized Terminal */
+/* Minimized Terminal - Version CORRIGÉE pour mobile */
 .cod-info-minimized {
   position: fixed;
   bottom: 20px;
-  right: 20px;
-  z-index: 100;
+  left: 20px;
+  z-index: 1000; /* Plus haut pour être sûr qu'il soit visible */
   font-family: 'Share Tech Mono', 'Courier New', monospace;
   cursor: pointer;
   animation: slideIn 0.5s ease-out;
+  max-width: 300px;
+}
+
+/* Command Input Styles - CORRIGÉ */
+.cod-command-line {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  padding-top: 5px;
+  border-top: 1px dashed #3a5f7f;
+  background: transparent;
+}
+
+.cod-prompt {
+  color: #ffd700;
+  margin-right: 8px;
+  font-size: 14px;
+  background: transparent;
+}
+
+.cod-command-input {
+  background: transparent !important;
+  border: none !important;
+  color: #00ff4c !important;
+  font-family: 'Share Tech Mono', 'Courier New', monospace;
+  font-size: 14px;
+  flex: 1;
+  outline: none !important;
+  caret-color: #ffd700;
+  min-width: 0;
+  padding: 4px 0;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent !important;
+}
+
+/* Forcer la suppression de tout fond blanc */
+.cod-command-input,
+.cod-command-input:focus,
+.cod-command-input:active,
+.cod-command-input:hover {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+/* Supprimer le placeholder (le rendre invisible) */
+.cod-command-input::placeholder {
+  color: transparent !important;
+  opacity: 0 !important;
+}
+
+.cod-command-input::-webkit-input-placeholder {
+  color: transparent !important;
+  opacity: 0 !important;
+}
+
+.cod-command-input::-moz-placeholder {
+  color: transparent !important;
+  opacity: 0 !important;
+}
+
+.cod-command-input:-ms-input-placeholder {
+  color: transparent !important;
+  opacity: 0 !important;
+}
+
+.cod-command-input::-ms-input-placeholder {
+  color: transparent !important;
+  opacity: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .cod-command-input {
+    font-size: 12px;
+  }
 }
 
 .cod-terminal-minimized {
@@ -28,6 +101,7 @@
   align-items: center;
   gap: 10px;
   box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+  backdrop-filter: blur(5px);
 }
 
 .cod-expand {
@@ -48,50 +122,79 @@
   color: #ff3333;
 }
 
-/* Command Input Styles */
-.cod-command-line {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  padding-top: 5px;
-  border-top: 1px dashed #3a5f7f;
+/* ===== MOBILE FIXES ===== */
+@media (max-width: 768px) {
+  .cod-info-minimized {
+    bottom: 15px;
+    left: 10px;  /* Collé à gauche */
+    right: auto; /* Annule le right: 15px */
+    max-width: 150px; /* 2x plus petit */
+    width: auto;
+  }
+
+  .cod-terminal-minimized {
+    padding: 6px 8px; /* Moitié du padding */
+    font-size: 10px; /* Plus petit */
+    justify-content: flex-start; /* Aligné à gauche */
+    width: auto;
+    border-width: 1px; /* Bordure plus fine */
+    gap: 5px; /* Moins d'espace entre éléments */
+  }
+
+  .cod-blink {
+    font-size: 8px; /* Point plus petit */
+  }
+
+  .cod-expand {
+    margin-left: 5px; /* Réduit la marge */
+    font-size: 10px;
+    padding: 2px 4px;
+  }
 }
 
-.cod-prompt {
-  color: #ffd700;
-  margin-right: 8px;
-  font-size: 14px;
+/* Très petits écrans */
+@media (max-width: 480px) {
+  .cod-info-minimized {
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+  }
+
+  .cod-terminal-minimized {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .cod-expand {
+    font-size: 12px;
+    padding: 4px 6px;
+  }
+
+  .cod-close {
+    font-size: 14px;
+    padding: 4px 6px;
+  }
 }
 
-.cod-command-input {
-  background: transparent;
-  border: none;
-  color: #00ff4c;
-  font-family: 'Share Tech Mono', 'Courier New', monospace;
-  font-size: 13px;
-  flex: 1;
-  outline: none;
-  caret-color: #ffd700;
+/* Mode paysage */
+@media (orientation: landscape) and (max-height: 500px) {
+  .cod-info-minimized {
+    bottom: 10px;
+  }
+  
+  .cod-terminal-minimized {
+    padding: 6px 12px;
+  }
 }
 
-.cod-command-input::placeholder {
-  color: #3a5f7f;
-  opacity: 0.5;
-}
-
-/* Command output styles */
-.cod-line.command {
-  color: #ffd700;
-}
-
-.cod-line.output {
-  color: #00ff4c;
-  margin-left: 15px;
-  opacity: 0.9;
-}
-
-/* Hover effect for minimized terminal */
-.cod-info-minimized:hover .cod-terminal-minimized {
-  border-color: #ffd700;
-  box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+/* Animation d'entrée */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }

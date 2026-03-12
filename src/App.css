@@ -33,7 +33,7 @@
 
 @media (max-width: 768px) {
   .map-container {
-    aspect-ratio: 1/1;
+    aspect-ratio: 1/0.7;
   }
 }
 
@@ -43,8 +43,7 @@
   right: 10px;
   width: 40px;
   height: 40px;
-  z-index: 10;
-  border: 2px solid #ffd700;
+  z-index: 1000;
   border-radius: 50%;
   background: #0a1420;
   display: flex;
@@ -56,7 +55,6 @@
 .map-emblem img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
 }
 
 /* Target/Selected Info */
@@ -99,133 +97,7 @@
 }
 
 /* Minimized Terminal - Now on LEFT side */
-.cod-info-minimized {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;  /* Changed from right: 20px to left: 20px */
-  right: auto; /* Added to override any right positioning */
-  z-index: 100;
-  font-family: 'Share Tech Mono', 'Courier New', monospace;
-  cursor: pointer;
-  animation: slideIn 0.5s ease-out;
-  max-width: 300px; /* Limit width on larger screens */
-}
 
-@media (min-width: 768px) {
-  .cod-info-minimized {
-    left: 20px;  /* Ensure it stays on left even on desktop */
-    right: auto;
-    max-width: 280px; /* Slightly smaller on desktop */
-  }
-}
-
-/* For very small screens, ensure it doesn't touch the edge too much */
-@media (max-width: 480px) {
-  .cod-info-minimized {
-    left: 10px;
-    right: 10px; /* Allow it to stretch on mobile for better readability */
-    max-width: none;
-  }
-}
-
-.cod-terminal-minimized {
-  background: rgba(0, 0, 0, 0.95);
-  border: 2px solid #3a5f7f;
-  border-radius: 8px;
-  padding: 12px 15px;
-  color: #00ff4c;
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
-}
-
-@media (min-width: 768px) {
-  .cod-terminal-minimized {
-    padding: 8px 15px;
-    justify-content: flex-start;
-  }
-}
-
-.cod-expand {
-  color: #ffd700;
-  font-weight: bold;
-  margin-left: auto;
-}
-
-.cod-close {
-  color: #ffd700;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-  padding: 0 5px;
-}
-
-.cod-close:hover {
-  color: #ff3333;
-}
-
-.cod-close:active {
-  transform: scale(0.9);
-}
-
-/* Command Input Styles */
-.cod-command-line {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  padding-top: 5px;
-  border-top: 1px dashed #3a5f7f;
-}
-
-.cod-prompt {
-  color: #ffd700;
-  margin-right: 8px;
-  font-size: 14px;
-}
-
-.cod-command-input {
-  background: transparent;
-  border: none;
-  color: #00ff4c;
-  font-family: 'Share Tech Mono', 'Courier New', monospace;
-  font-size: 14px;
-  flex: 1;
-  outline: none;
-  caret-color: #ffd700;
-  min-width: 0;
-}
-
-@media (max-width: 768px) {
-  .cod-command-input {
-    font-size: 12px;
-  }
-}
-
-.cod-command-input::placeholder {
-  color: #3a5f7f;
-  opacity: 0.5;
-}
-
-/* Command output styles */
-.cod-line.command {
-  color: #ffd700;
-}
-
-.cod-line.output {
-  color: #00ff4c;
-  margin-left: 15px;
-  opacity: 0.9;
-  word-break: break-word;
-}
-
-/* Hover effect for minimized terminal */
-.cod-info-minimized:hover .cod-terminal-minimized {
-  border-color: #ffd700;
-  box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
-}
 
 /* Target display for casualty data */
 .target .casualty-detail {

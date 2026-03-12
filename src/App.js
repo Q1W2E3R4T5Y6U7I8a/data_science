@@ -257,9 +257,12 @@ function App() {
                 }}
               </Geographies>
             </ComposableMap>
-            <div className="map-emblem">
-              <img src={`${publicUrl}/dumy_emblem.png`} alt="emblem" />
-            </div>
+            {/* DataDUM Emblem Link */}
+          <div className="map-emblem">
+            <a href="https://q1w2e3r4t5y6u7i8a.github.io/dumy_page/" target="_blank" rel="noopener noreferrer">
+              <img src={`${process.env.PUBLIC_URL}/dumy_emblem.png`} alt="DataDUM Emblem" />
+            </a>
+          </div>
           </div>
 
           {selected && (

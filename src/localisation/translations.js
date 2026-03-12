@@ -1,11 +1,5 @@
 const translations = {
   en: {
-population: "POPULATION",
-populationTotal: "POPULATION",
-populationChangePercent: "CHANGE %",
-populationChangeAbsolute: "CHANGE ABSOLUTE",
-    //////
-
     // Header & Navigation
     default: "DEFAULT",
     gdp: "GDP",
@@ -29,11 +23,16 @@ populationChangeAbsolute: "CHANGE ABSOLUTE",
     musicOn: "MUSIC ON",
     musicOff: "MUSIC OFF",
     
+    // Population
+    population: "POPULATION",
+    populationTotal: "POPULATION",
+    populationChangePercent: "CHANGE %",
+    populationChangeAbsolute: "CHANGE ABSOLUTE",
+    
     // Target/CodInfo
     target: "TARGET",
     area: "AREA",
     gdpLabel: "GDP",
-    population: "POPULATION",
     deaths: "DEATHS",
     percentOf1939Pop: "% OF 1939 POP",
     civMil: "CIV (MIL)",
@@ -41,9 +40,9 @@ populationChangeAbsolute: "CHANGE ABSOLUTE",
     
     // Premium Popup
     premiumFeature: "PREMIUM CONTENT",
-    featureAvailable: "This feature is available in Premium version, tou get access you have to:",
+    featureAvailable: "This feature is available in Premium version, to get access you have to:",
     upgradeToPremium: "OPTION 1: SUPPORT THE PROJECT",
-    supportProjectMessage: "The amount doesn't matter, it's kind of volunteering project for the moment",
+    supportProjectMessage: "The amount doesn't matter, it's a volunteer project for the moment",
     helpUkraine: "OPTION 2: HELP UKRAINE",
     humanitarianAid: "HUMANITARIAN AID",
     militaryAid: "MILITARY AID",
@@ -91,14 +90,6 @@ populationChangeAbsolute: "CHANGE ABSOLUTE",
   },
   
   fr: {
-   population: "POPULATION",
-   populationTotal: "POPULATION",
-populationChangePercent: "VARIATION %",
-populationChangeAbsolute: "VARIATION ABSOLUE",
-    ////
-
-
-
     // Header & Navigation
     default: "DÉFAUT",
     gdp: "PIB",
@@ -122,11 +113,16 @@ populationChangeAbsolute: "VARIATION ABSOLUE",
     musicOn: "MUSIQUE ON",
     musicOff: "MUSIQUE OFF",
     
+    // Population
+    population: "POPULATION",
+    populationTotal: "POPULATION",
+    populationChangePercent: "VARIATION %",
+    populationChangeAbsolute: "VARIATION ABSOLUE",
+    
     // Target/CodInfo
     target: "CIBLE",
     area: "SUPERFICIE",
     gdpLabel: "PIB",
-    population: "POPULATION",
     deaths: "MORTS",
     percentOf1939Pop: "% POP 1939",
     civMil: "CIV (MIL)",
@@ -134,7 +130,7 @@ populationChangeAbsolute: "VARIATION ABSOLUE",
     
     // Premium Popup
     premiumFeature: "CONTENU PREMIUM",
-    featureAvailable: "Cette fonctionnalité est disponible dans la version Premium, pour avoir l'acces il faut:",
+    featureAvailable: "Cette fonctionnalité est disponible dans la version Premium, pour avoir l'accès il faut:",
     upgradeToPremium: "OPTION 1: SOUTENIR LE PROJET",
     supportProjectMessage: "Le montant n'a pas d'importance, c'est un projet bénévole pour le moment",
     helpUkraine: "OPTION 2: AIDER L'UKRAINE",
@@ -184,16 +180,6 @@ populationChangeAbsolute: "VARIATION ABSOLUE",
   },
   
   ua: {
-population: "НАСЕЛЕННЯ",
-    populationTotal: "НАСЕЛЕННЯ",
-populationChangePercent: "ЗМІНА %",
-populationChangeAbsolute: "ЗМІНА АБСОЛЮТНА",
-
-//////
-
-
-
-
     // Header & Navigation
     default: "ДЕФОЛТ",
     gdp: "ВВП",
@@ -217,11 +203,16 @@ populationChangeAbsolute: "ЗМІНА АБСОЛЮТНА",
     musicOn: "МУЗИКА УВІМК",
     musicOff: "МУЗИКА ВИМК",
     
+    // Population
+    population: "НАСЕЛЕННЯ",
+    populationTotal: "НАСЕЛЕННЯ",
+    populationChangePercent: "ЗМІНА %",
+    populationChangeAbsolute: "ЗМІНА АБСОЛЮТНА",
+    
     // Target/CodInfo
     target: "ЦІЛЬ",
     area: "ПЛОЩА",
     gdpLabel: "ВВП",
-    population: "НАСЕЛЕННЯ",
     deaths: "СМЕРТІ",
     percentOf1939Pop: "% НАС 1939",
     civMil: "ЦИВ (ВІЙСЬК)",

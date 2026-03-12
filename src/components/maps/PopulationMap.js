@@ -96,57 +96,68 @@ const PopulationMap = ({
 
   return (
     <>
-      <Graticule stroke="#04ff00" strokeWidth={0.2} opacity={0.2} />
-      
+      <Graticule stroke="#04ff00" strokeWidth={0.3} />
       <Geographies geography={geographies}>
         {() => (
-          geographies.map(geo => (
-            <Geography
-              key={geo.rsmKey}
-              geography={geo}
-              fill="#0a1a2a"
-              fillOpacity={0.2}
-              stroke="#1a2a3a"
-              strokeWidth={0.5}
-              style={{ default: { outline: 'none' } }}
-            />
-          ))
+          <>
+            {/* Faint base geography - EXACTEMENT COMME LES AUTRES MAPS */}
+            {geographies.map(geo => {
+              const name = geo.properties.name;
+              const baseColor = getCountryColor ? getCountryColor(name, colorMode) : (countryColors[name] || getFlagColor(name));
+              
+              return (
+                <Geography
+                  key={geo.rsmKey}
+                  geography={geo}
+                  fill={baseColor}
+                  fillOpacity={0.1}
+                  stroke="#0a1a2a"
+                  strokeWidth={0.5}
+                  style={{
+                    default: { outline: 'none' },
+                    hover: { fill: '#ffd700', fillOpacity: 0.3, outline: 'none', cursor: 'crosshair' }
+                  }}
+                />
+              );
+            })}
+            
+            {/* Population circles */}
+            {processedCircles.map((circle, idx) => (
+              <Marker key={`pop-marker-${idx}`} coordinates={projection.invert(circle.coords)}>
+                <circle
+                  r={circle.r}
+                  fill={circle.fillColor}
+                  fillOpacity={0.6}
+                  stroke={circle.isNegative ? "#ffffff" : "#0a1a2a"}
+                  strokeWidth={circle.isNegative ? 2 : 1}
+                  style={{ 
+                    cursor: 'pointer', 
+                    transition: 'all 0.3s ease',
+                    filter: circle.isNegative ? 'drop-shadow(0 0 3px rgba(255, 51, 51, 0.6))' : 'none'
+                  }}
+                  onClick={() => setSelected({ 
+                    name: circle.name, 
+                    type: 'population',
+                    value: {
+                      total: circle.data.population,
+                      percentChange: circle.data.percentChange,
+                      absoluteChange: circle.data.absoluteChange,
+                      view: populationView
+                    }
+                  })}
+                >
+                  <title>
+                    {`${circle.name}\n${populationView}: ${
+                      populationView === 'total' ? circle.data.population : 
+                      populationView === 'changePercent' ? circle.data.percentChange : circle.data.absoluteChange
+                    }`}
+                  </title>
+                </circle>
+              </Marker>
+            ))}
+          </>
         )}
       </Geographies>
-
-      {processedCircles.map((circle, idx) => (
-        <Marker key={`pop-marker-${idx}`} coordinates={projection.invert(circle.coords)}>
-          <circle
-            r={circle.r}
-            fill={circle.fillColor}
-            fillOpacity={0.8}
-            stroke={circle.isNegative ? "#ffffff" : "#0a1a2a"}
-            strokeWidth={circle.isNegative ? 2 : 1}
-            style={{ 
-              cursor: 'pointer', 
-              transition: 'all 0.3s ease',
-              filter: circle.isNegative ? 'drop-shadow(0 0 3px rgba(255, 51, 51, 0.6))' : 'none'
-            }}
-            onClick={() => setSelected({ 
-              name: circle.name, 
-              type: 'population',
-              value: {
-                total: circle.data.population,
-                percentChange: circle.data.percentChange,
-                absoluteChange: circle.data.absoluteChange,
-                view: populationView
-              }
-            })}
-          >
-            <title>
-              {`${circle.name}\n${populationView}: ${
-                populationView === 'total' ? circle.data.population : 
-                populationView === 'changePercent' ? circle.data.percentChange : circle.data.absoluteChange
-              }`}
-            </title>
-          </circle>
-        </Marker>
-      ))}
     </>
   );
 };

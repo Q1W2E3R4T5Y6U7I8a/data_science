@@ -82,7 +82,7 @@ const PremiumPopup = ({ isOpen, onClose, feature, t }) => {
               <h3>{t('upgradeToPremium')}</h3>
               <p>{t('supportProjectMessage')}</p>
               <div className="premium-links">
-                <a href="https://www.patreon.com/" target="_blank" rel="noopener noreferrer" className="premium-button patreon">
+                <a href="https://www.patreon.com/cw/dumyUA" target="_blank" rel="noopener noreferrer" className="premium-button patreon">
                   PATREON
                 </a>
                 <a href="https://www.paypal.com/" target="_blank" rel="noopener noreferrer" className="premium-button paypal">
@@ -100,7 +100,7 @@ const PremiumPopup = ({ isOpen, onClose, feature, t }) => {
                 <a href="https://savelife.in.ua/en/" target="_blank" rel="noopener noreferrer" className="premium-button ukraine">
                   {t('humanitarianAid')}
                 </a>
-                <a href="https://savelife.in.ua/en/" target="_blank" rel="noopener noreferrer" className="premium-button ukraine">
+                <a href="https://prytulafoundation.org/" target="_blank" rel="noopener noreferrer" className="premium-button ukraine">
                   {t('militaryAid')}
                 </a>
               </div>

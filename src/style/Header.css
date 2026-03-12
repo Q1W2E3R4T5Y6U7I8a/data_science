@@ -158,25 +158,6 @@
   border-left: 2px solid #ffd700;
 }
 
-/* Mobile dropdown */
-@media (max-width: 768px) {
-  .dropdown-content {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 180px;
-    max-width: 90%;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  }
-  
-  .dropdown-content .mode-button {
-    text-align: center;
-    padding: 10px;
-    justify-content: center; /* Center on mobile */
-  }
-}
-
 /* Separator */
 .mode-separator {
   color: #3a5f7f;
@@ -196,14 +177,6 @@
   100% { opacity: 0.3; }
 }
 
-@media (max-width: 768px) {
-  .mode-separator {
-    margin: 5px 0;
-    transform: rotate(90deg);
-    font-size: 16px;
-  }
-}
-
 /* Music control */
 .music-control-container {
   position: absolute;
@@ -215,22 +188,12 @@
   z-index: 500;
 }
 
-@media (max-width: 767px) {
-  .music-control-container {
-    position: static;
-    transform: none;
-    margin: 0 ;
-    width: 100%;
-    justify-content: center;
-  }
-}
-
 /* Music button - FIXED CENTERING */
 .music-button {
   background: transparent;
   border: 1px solid #3a5f7f;
   color: #00ff4c;
-  padding: 6px 0px;
+  padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
   font-family: 'Courier New', monospace;
@@ -286,16 +249,6 @@
   min-width: 150px;
 }
 
-@media (max-width: 767px) {
-  .volume-slider-container {
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
-    width: 90%;
-    max-width: 250px;
-  }
-}
-
 .volume-slider {
   flex: 1;
   height: 6px;
@@ -330,18 +283,112 @@
   justify-content: flex-end;
 }
 
-/* Mobile adjustments */
-@media (max-width: 480px) {
+/* ===== MOBILE - 2 RANGÉES AVEC MUSIQUE CENTRÉE ===== */
+@media (max-width: 768px) {
+  .mode-controls {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Première rangée : DEFAULT, GDP, REAL SIZE, POPULATION, WW2 */
+  .mode-switch {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    width: 100%;
+    padding: 5px 0;
+  }
+
+  /* Deuxième rangée : FLAG, CONTINENT + musique centrée */
+  .color-mode-switch {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 5px 0;
+  }
+
+  /* Tous les boutons de la même taille */
   .mode-button {
     font-size: 10px;
     padding: 6px 8px;
     min-height: 32px;
+    min-width: 55px;
   }
-  
+
+  /* Dropdown parent */
+  .dropdown .mode-button {
+    min-width: 65px;
+  }
+
+  /* Musique centrée avec les boutons - CORRIGÉ AVEC  */
+  .music-control-container {
+
+margin-top: 30px ;
+
+  }
+
   .music-button {
-    min-width: 100px;
-    padding: 8px 12px;
-    min-height: 40px;
+    min-width: 85px;
+    font-size: 10px;
+    padding: 6px 10px;
+    min-height: 32px;
+    margin: 0;
+  }
+
+  /* Cacher le séparateur */
+  .mode-separator {
+    display: none;
+  }
+
+  /* Volume slider centré */
+  .volume-slider-container {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    top: 110%;
   }
 }
 
+/* Pour très petits écrans */
+@media (max-width: 480px) {
+  .mode-button {
+    font-size: 9px;
+    padding: 5px 5px;
+    min-width: 48px;
+    min-height: 30px;
+  }
+
+  .dropdown .mode-button {
+    min-width: 55px;
+  }
+
+  .music-button {
+    min-width: 75px;
+    font-size: 9px;
+    padding: 5px 8px;
+    min-height: 30px;
+  }
+}
+
+/* Fix pour très petits écrans en hauteur (paysage) */
+@media (max-width: 768px) and (max-height: 500px) {
+  .header {
+    gap: 3px;
+    padding-bottom: 3px;
+    margin-bottom: 3px;
+  }
+
+  .mode-button {
+    min-height: 18px ;
+    padding: 2px 1px ;
+  }
+
+  .music-button {
+    min-height: 26px;
+    padding: 3px 8px;
+  }
+}

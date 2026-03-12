@@ -468,6 +468,17 @@ ${countryName}:
         output = args.slice(1).join(' ') || '';
         break;
 
+      case 'data_info':
+        output = `
+      DATA REFERENCE INFORMATION:
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        Opening data spreadsheet in new tab...
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        `;
+        // Ouvrir le lien dans un nouvel onglet
+        window.open('https://docs.google.com/spreadsheets/d/1whItSFf_-NObTw-U6iGWs3TEi1IDmnv9RmR4GbvYgCc/edit?usp=sharing', '_blank', 'noopener,noreferrer');
+        break;
+
       default:
         output = `Unknown command: "${cmd}". Type "help" for available commands.`;
     }
@@ -618,7 +629,8 @@ ${countryName}:
         '> MAP COMMAND CONSOLE v1.0',
         '> SECURE LINK ESTABLISHED',
         '> Type "help" for available commands',
-        '> Type "userinfo" for system information'
+        '> Type "userinfo" for system information',
+        '> Type "data_info" for details on data reference',
       ];
       setDisplayLines(lines);
       setHasInitialized(true);
@@ -653,9 +665,7 @@ ${countryName}:
   }, [currentLineIndex, currentCharIndex, displayLines, isTyping, playTypingSound]);
 
   // If on mobile, don't render anything
-  if (isMobile) {
-    return null;
-  }
+
 
   // If not visible, show only the minimized version
   if (!isVisible) {

@@ -107,7 +107,8 @@ const Header = ({
             </div>
           </div>
           
-          {/* Ukraine-Russia War Dropdown */}
+{/*
+          {/* Ukraine-Russia War Dropdown * /}
           <div className="dropdown mode-button">{t('ukraineRussiaWar')}
             <div className="dropdown-content">
               <span 
@@ -169,7 +170,7 @@ const Header = ({
           
           <div className="mode-separator">|||||</div>
 
-          {/* 2050 Dropdown */}
+          {/* 2050 Dropdown * /}
           <div className="dropdown mode-button">{t('year2050')}
             <div className="dropdown-content">
               <span 
@@ -193,7 +194,7 @@ const Header = ({
             </div>
           </div>
           
-          {/* 2100 Dropdown */}
+          {/* 2100 Dropdown * /}
           <div className="dropdown mode-button">{t('year2100')}
             <div className="dropdown-content">
               <span 
@@ -216,6 +217,7 @@ const Header = ({
               </span>
             </div>
           </div>
+*/}
 
           <div className="mode-separator">|||||</div>
           
