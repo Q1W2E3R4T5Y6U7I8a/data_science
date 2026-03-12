@@ -13,11 +13,13 @@ const PrivacyPolicy = ({ onAccept, t }) => {
   return (
     <div className="privacy-overlay">
       <div className="privacy-modal">
+        {/* HEADER - Fixe en haut */}
         <div className="privacy-header">
           <span className="privacy-blink">●</span>
           <span className="privacy-blink">●</span>
         </div>
         
+        {/* CONTENU SCROLLABLE - Seulement cette partie défile */}
         <div className="privacy-content">
           <div className="privacy-message">
             <p>{t('systemNotice')}</p>
@@ -47,14 +49,16 @@ const PrivacyPolicy = ({ onAccept, t }) => {
               [ {t('viewFullPrivacy')} ]
             </a>
           </div>
-          
-          <div className="privacy-footer">
-            <button className="privacy-button accept" onClick={handleAccept}>
-              ▸ {t('acceptProceed')}
-            </button>
-          </div>
+        </div>
+
+        {/* FOOTER - Fixe en bas (déplacé HORS de privacy-content) */}
+        <div className="privacy-footer">
+          <button className="privacy-button accept" onClick={handleAccept}>
+            ▸ {t('acceptProceed')}
+          </button>
         </div>
         
+        {/* Terminal footer (optionnel - à garder si vous voulez une deuxième ligne) */}
         <div className="privacy-terminal-footer">
           <span>{t('encryptedConnection')}</span>
           <span className="privacy-status">{t('awaitingAuth')}</span>

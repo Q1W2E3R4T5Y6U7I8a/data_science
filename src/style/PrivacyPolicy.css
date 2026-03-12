@@ -1,183 +1,159 @@
-/* Privacy Policy Styles */
+/* Privacy Policy - Version Full Screen Mobile */
 .privacy-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.95);
+  background: rgba(0, 0, 0, 0.98);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+  z-index: 10000;
   font-family: 'Courier New', monospace;
-  animation: fadeIn 0.5s ease-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  padding: 0; /* Supprime le padding pour utiliser tout l'espace */
 }
 
 .privacy-modal {
   background: #0a1420;
-  border: 3px solid #ffd700;
-  border-radius: 8px;
-  padding: 30px;
-  max-width: 600px;
-  width: 90%;
-  box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
-  animation: slideUp 0.5s ease-out;
+  border: 2px solid #ffd700;
+  border-radius: 0; /* Coins carrés pour plus d'espace sur mobile */
+  width: 100%;
+  max-width: 100%;
+  height: 100vh; /* Prend toute la hauteur de l'écran */
+  max-height: 100vh; /* S'assure que ça prend toute la hauteur */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+  margin: 0; /* Supprime toute marge */
+  border-radius: 0; /* Coins carrés sur mobile */
 }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
+/* Header fixe en haut */
 .privacy-header {
   color: #ffd700;
-  font-size: 18px;
-  letter-spacing: 3px;
-  text-align: center;
-  padding-bottom: 15px;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #3a5f7f;
-  text-transform: uppercase;
-  font-weight: bold;
+  padding: 20px 15px; /* Plus de padding pour faciliter le touché */
+  border-bottom: 1px solid #3a5f7f;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  flex-shrink: 0;
+  background: #0a1420; /* Fond solide pour éviter la transparence */
+  z-index: 2; /* Au-dessus du contenu */
 }
 
-.privacy-blink {
-  animation: blink 1s infinite;
-  color: #04ff00;
-  font-size: 14px;
-}
-
+/* ZONE DE TEXTE - Scrollable */
 .privacy-content {
+  overflow-y: auto;
+  flex: 1 1 auto;
+  padding: 20px 15px;
   color: #04ff00;
-  font-size: 14px;
-  line-height: 1.8;
-  text-shadow: 0 0 5px rgba(4, 255, 0, 0.5);
+  font-size: 14px; /* Légèrement plus grand pour la lisibilité mobile */
+  line-height: 1.6;
+  -webkit-overflow-scrolling: touch;
+  background: #0a1420;
+  min-height: 0; /* Important pour Firefox */
+  height: 100%; /* Prend l'espace disponible */
 }
 
-.privacy-message {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.privacy-message p {
-  margin: 10px 0;
-}
-
-.privacy-message p:first-child {
-  color: #ffd700;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.privacy-list {
-  background: rgba(0, 20, 40, 0.8);
-  border: 1px solid #3a5f7f;
-  border-radius: 4px;
-  padding: 20px;
-  margin: 20px 0;
-}
-
-.privacy-item {
-  margin: 10px 0;
-  color: #c0d0e0;
-  font-size: 13px;
-}
-
-.privacy-policy-link {
-  text-align: center;
-  margin: 25px 0;
-}
-
-.privacy-link {
-  color: #ffd700;
-  text-decoration: none;
-  font-size: 14px;
-  letter-spacing: 1px;
-  padding: 8px 16px;
-  border: 1px solid #ffd700;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-  display: inline-block;
-}
-
-.privacy-link:hover {
-  background: rgba(255, 215, 0, 0.1);
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-  transform: scale(1.05);
-}
-
+/* Footer fixe en bas */
 .privacy-footer {
+  padding: 15px;
+  background: #0a1420;
+  border-top: 1px solid rgba(58, 95, 127, 0.5);
   text-align: center;
-  margin: 30px 0 15px;
+  flex-shrink: 0;
+  z-index: 2;
+  box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3); /* Ombre pour démarquer le footer */
 }
 
 .privacy-button {
+  width: 100%;
+  max-width: 300px; /* Plus large sur mobile */
+  padding: 16px; /* Plus grand pour faciliter le clic */
   background: transparent;
   border: 2px solid #04ff00;
   color: #04ff00;
-  padding: 12px 30px;
-  font-size: 16px;
   font-weight: bold;
-  letter-spacing: 2px;
-  cursor: pointer;
   font-family: 'Courier New', monospace;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  font-size: 14px; /* Taille de police cohérente */
+  letter-spacing: 1px;
 }
 
 .privacy-button:hover {
   background: #04ff00;
   color: #0a1420;
-  box-shadow: 0 0 30px rgba(4, 255, 0, 0.5);
-  transform: scale(1.05);
 }
 
 .privacy-button:active {
-  transform: scale(0.95);
+  background: #04ff00;
+  color: #0a1420;
+  transform: scale(0.98); /* Effet de clic subtil */
 }
 
-.privacy-warning {
-  text-align: center;
-  color: #ffd700;
-  font-size: 11px;
-  margin-top: 20px;
-  opacity: 0.7;
+/* Media query pour très petits écrans */
+@media (max-width: 350px) {
+  .privacy-header {
+    padding: 15px 12px;
+    font-size: 14px;
+  }
+  
+  .privacy-content {
+    padding: 15px 12px;
+    font-size: 13px;
+  }
+  
+  .privacy-button {
+    padding: 14px;
+    font-size: 13px;
+  }
 }
 
-.privacy-terminal-footer {
-  margin-top: 25px;
-  padding-top: 15px;
-  border-top: 1px solid #3a5f7f;
-  font-size: 11px;
-  display: flex;
-  justify-content: space-between;
-  color: #c0d0e0;
+/* Media query pour mode paysage */
+@media (orientation: landscape) and (max-height: 500px) {
+  .privacy-header {
+    padding: 10px 15px;
+  }
+  
+  .privacy-header h2 {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .privacy-content {
+    padding: 12px 15px;
+  }
+  
+  .privacy-footer {
+    padding: 8px 15px;
+  }
+  
+  .privacy-button {
+    padding: 10px;
+    max-width: 250px;
+  }
 }
 
-.privacy-status {
-  color: #ffd700;
-  font-weight: bold;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.5; }
-  100% { opacity: 1; }
+/* Support pour les appareils avec encoche (notch) */
+@supports (padding: max(0px)) {
+  .privacy-header {
+    padding-left: max(15px, env(safe-area-inset-left));
+    padding-right: max(15px, env(safe-area-inset-right));
+    padding-top: max(20px, env(safe-area-inset-top));
+  }
+  
+  .privacy-content {
+    padding-left: max(15px, env(safe-area-inset-left));
+    padding-right: max(15px, env(safe-area-inset-right));
+  }
+  
+  .privacy-footer {
+    padding-left: max(15px, env(safe-area-inset-left));
+    padding-right: max(15px, env(safe-area-inset-right));
+    padding-bottom: max(15px, env(safe-area-inset-bottom));
+  }
 }
