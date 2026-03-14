@@ -1,19 +1,14 @@
 // components/DefaultMap.js
 import React from 'react';
-import { ComposableMap, Geographies, Geography, Graticule } from 'react-simple-maps';
+import { Geographies, Geography, Graticule } from 'react-simple-maps';
 import { geoEqualEarth, geoPath } from 'd3-geo';
-import { getFlagColor } from '../../countryUtils';
 
-const DefaultMap = ({ geographies, gdpData, countryColors, setSelected, getCountryColor, colorMode }) => {
+const DefaultMap = ({ geographies, gdpData, setSelected, getCountryColor, colorMode }) => {
   const projection = geoEqualEarth().scale(150).center([-50, 5]);
   const path = geoPath().projection(projection);
 
   const getColor = (countryName) => {
-    if (getCountryColor) {
-      return getCountryColor(countryName, colorMode);
-    }
-    if (countryColors[countryName]) return countryColors[countryName];
-    return getFlagColor(countryName);
+    return getCountryColor(countryName, colorMode);
   };
 
   return (

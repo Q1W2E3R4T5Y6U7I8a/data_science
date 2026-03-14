@@ -61,6 +61,7 @@ export const flagColors = {
   'Armenia': '#FF0000', // red (bottom stripe)
   'Azerbaijan': '#FF0000', // red (center stripe)
   'Kazakhstan': '#FFD700', // yellow (sun)
+    'Turkey': '#FF0000', // yellow (sun)
   'Uzbekistan': '#FF0000', // red (stripes)
   'Turkmenistan': '#FF0000', // red (stripes)
   'Kyrgyzstan': '#FF0000', // red (center)
@@ -224,5 +225,7 @@ export const flagColors = {
   // Default
   'Default': '#808080' // gray
 };
+
+
 
 export default flagColors;

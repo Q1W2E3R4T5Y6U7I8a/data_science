@@ -331,3 +331,59 @@
     }
   }
 }
+
+
+/* Privacy Policy Footer Link */
+.privacy-footer-link {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  text-align: center;
+  pointer-events: none; /* Allows clicking through to the button */
+}
+
+.privacy-link-button {
+  background: transparent;
+  border: none;
+  color: #3a5f7f;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  padding: 5px 10px;
+  transition: all 0.3s ease;
+  pointer-events: auto; /* Makes button clickable */
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.privacy-link-button:hover {
+  color: #ffd700;
+  opacity: 1;
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+}
+
+/* Ensure it doesn't conflict with other elements on mobile */
+@media (max-width: 768px) {
+  .privacy-footer-link {
+    bottom: 15px;
+  }
+  
+  .privacy-link-button {
+    font-size: 10px;
+    background: rgba(10, 20, 32, 0.8);
+    padding: 8px 15px;
+    border-radius: 4px;
+    border: 1px solid #3a5f7f;
+  }
+}
+
+/* Make sure it doesn't overlap with quiz button on very small screens */
+@media (max-width: 480px) {
+  .privacy-footer-link {
+    bottom: 10px;
+  }
+  
+}

@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
-import { Geographies, Geography, Graticule, Marker } from 'react-simple-maps';
-import { geoEqualEarth, geoPath } from 'd3-geo';
-import { scaleSqrt, scaleLinear } from 'd3-scale';
+import { Geography, Graticule } from 'react-simple-maps';
+import { geoPath } from 'd3-geo';
 import { getFlagColor, getCountryVariations } from '../../countryUtils';
+import { calculateCircleRadius, getScaleTypeForView, CIRCLE_CONFIG } from '../../utils/circleScaling';
 
 const PopulationMap = ({ 
   geographies, 
@@ -12,17 +12,16 @@ const PopulationMap = ({
   colorMode,
   populationView, 
   t,
-  populationData 
+  populationData,
+  projection
 }) => {
-  const projection = geoEqualEarth().scale(150).center([-50, 5]);
   const path = geoPath().projection(projection);
 
-  // FIX: Handles Unicode minus sign (U+2212) which is different from hyphen (-)
   const getNumericValue = (val) => {
     if (!val) return 0;
     const cleanVal = String(val)
-      .replace(/−/g, '-') // Replace special dash with standard minus
-      .replace(/,/g, '');  // Remove commas
+      .replace(/−/g, '-')
+      .replace(/,/g, '');
     const num = parseFloat(cleanVal);
     return isNaN(num) ? 0 : num;
   };
@@ -33,10 +32,6 @@ const PopulationMap = ({
     const maxPop = Math.max(...populationData.map(d => getNumericValue(d.population)), 1);
     const maxAbs = Math.max(...populationData.map(d => Math.abs(getNumericValue(d.absoluteChange))), 1);
     const maxPct = Math.max(...populationData.map(d => Math.abs(getNumericValue(d.percentChange))), 1);
-
-    const radiusScalePop = scaleSqrt().domain([0, maxPop]).range([2, 35]);
-    const radiusScaleAbs = scaleLinear().domain([0, maxAbs]).range([1.5, 25]);
-    const radiusScalePct = scaleLinear().domain([0, maxPct]).range([1.5, 25]);
 
     const results = [];
     const drawn = new Set();
@@ -59,31 +54,30 @@ const PopulationMap = ({
         const abs = getNumericValue(countryMatch.absoluteChange);
         const pct = getNumericValue(countryMatch.percentChange);
 
-        let r = 2;
+        let radius = CIRCLE_CONFIG.MIN_RADIUS;
         let fillColor = '#00ff4c';
         let isNegative = false;
 
         if (populationView === 'total') {
-          r = radiusScalePop(pop);
+          radius = calculateCircleRadius(pop, maxPop, 'sqrt');
           fillColor = getCountryColor ? getCountryColor(name, colorMode) : (countryColors[name] || getFlagColor(name));
         } else {
-          // Logic for change-based views
           const changeVal = populationView === 'changePercent' ? pct : abs;
-          r = populationView === 'changePercent' ? radiusScalePct(Math.abs(pct)) : radiusScaleAbs(Math.abs(abs));
+          const maxVal = populationView === 'changePercent' ? maxPct : maxAbs;
+          radius = calculateCircleRadius(Math.abs(changeVal), maxVal, 'linear');
           
           if (changeVal < 0) {
-            fillColor = '#ff3333'; // Red
+            fillColor = '#ff3333';
             isNegative = true;
           } else {
-            fillColor = '#00ff4c'; // Green
-            isNegative = false;
+            fillColor = '#00ff4c';
           }
         }
 
         results.push({
           name,
           coords: centroid,
-          r: Math.max(r, 1.5),
+          r: radius,
           fillColor,
           isNegative,
           data: countryMatch
@@ -92,72 +86,66 @@ const PopulationMap = ({
       }
     });
     return results;
-  }, [populationData, geographies, populationView, colorMode, countryColors, getCountryColor]);
+  }, [populationData, geographies, populationView, colorMode, countryColors, getCountryColor, path]);
 
   return (
     <>
       <Graticule stroke="#04ff00" strokeWidth={0.3} />
-      <Geographies geography={geographies}>
-        {() => (
-          <>
-            {/* Faint base geography - EXACTEMENT COMME LES AUTRES MAPS */}
-            {geographies.map(geo => {
-              const name = geo.properties.name;
-              const baseColor = getCountryColor ? getCountryColor(name, colorMode) : (countryColors[name] || getFlagColor(name));
-              
-              return (
-                <Geography
-                  key={geo.rsmKey}
-                  geography={geo}
-                  fill={baseColor}
-                  fillOpacity={0.1}
-                  stroke="#0a1a2a"
-                  strokeWidth={0.5}
-                  style={{
-                    default: { outline: 'none' },
-                    hover: { fill: '#ffd700', fillOpacity: 0.3, outline: 'none', cursor: 'crosshair' }
-                  }}
-                />
-              );
-            })}
-            
-            {/* Population circles */}
-            {processedCircles.map((circle, idx) => (
-              <Marker key={`pop-marker-${idx}`} coordinates={projection.invert(circle.coords)}>
-                <circle
-                  r={circle.r}
-                  fill={circle.fillColor}
-                  fillOpacity={0.6}
-                  stroke={circle.isNegative ? "#ffffff" : "#0a1a2a"}
-                  strokeWidth={circle.isNegative ? 2 : 1}
-                  style={{ 
-                    cursor: 'pointer', 
-                    transition: 'all 0.3s ease',
-                    filter: circle.isNegative ? 'drop-shadow(0 0 3px rgba(255, 51, 51, 0.6))' : 'none'
-                  }}
-                  onClick={() => setSelected({ 
-                    name: circle.name, 
-                    type: 'population',
-                    value: {
-                      total: circle.data.population,
-                      percentChange: circle.data.percentChange,
-                      absoluteChange: circle.data.absoluteChange,
-                      view: populationView
-                    }
-                  })}
-                >
-                  <title>
-                    {`${circle.name}\n${populationView}: ${
-                      populationView === 'total' ? circle.data.population : 
-                      populationView === 'changePercent' ? circle.data.percentChange : circle.data.absoluteChange
-                    }`}
-                  </title>
-                </circle>
-              </Marker>
-            ))}
-          </>
-        )}
-      </Geographies>
+      
+      {geographies.map(geo => {
+        const name = geo.properties.name;
+        const baseColor = getCountryColor ? getCountryColor(name, colorMode) : (countryColors[name] || getFlagColor(name));
+        
+        return (
+          <Geography
+            key={geo.rsmKey}
+            geography={geo}
+            fill={baseColor}
+            fillOpacity={0.1}
+            stroke="#0a1a2a"
+            strokeWidth={0.5}
+            style={{
+              default: { outline: 'none' },
+              hover: { fill: '#ffd700', fillOpacity: 0.3, outline: 'none', cursor: 'crosshair' }
+            }}
+          />
+        );
+      })}
+      
+      {processedCircles.map((circle, idx) => (
+        <circle
+          key={`pop-circle-${idx}`}
+          cx={circle.coords[0]}
+          cy={circle.coords[1]}
+          r={circle.r}
+          fill={circle.fillColor}
+          fillOpacity={0.6}
+          stroke={circle.isNegative ? "#ffffff" : "#0a1a2a"}
+          strokeWidth={circle.isNegative ? 2 : 1}
+          style={{ 
+            cursor: 'pointer', 
+            transition: 'all 0.3s ease',
+            filter: circle.isNegative ? 'drop-shadow(0 0 3px rgba(255, 51, 51, 0.6))' : 'none'
+          }}
+          onClick={() => setSelected({ 
+            name: circle.name, 
+            type: 'population',
+            value: {
+              total: circle.data.population,
+              percentChange: circle.data.percentChange,
+              absoluteChange: circle.data.absoluteChange,
+              view: populationView
+            }
+          })}
+        >
+          <title>
+            {`${circle.name}\n${populationView}: ${
+              populationView === 'total' ? circle.data.population : 
+              populationView === 'changePercent' ? circle.data.percentChange : circle.data.absoluteChange
+            }`}
+          </title>
+        </circle>
+      ))}
     </>
   );
 };

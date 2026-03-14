@@ -1,7 +1,6 @@
-
 import React from 'react';
-import { ComposableMap, Geographies, Geography, Graticule } from 'react-simple-maps';
-import { geoEqualEarth, geoPath } from 'd3-geo';
+import { Geography, Graticule } from 'react-simple-maps';
+import { geoPath } from 'd3-geo';
 import { getFlagColor } from '../../countryUtils';
 
 // HARDCODED CASUALTY DATA
@@ -197,9 +196,20 @@ const formatNumber = (num) => {
   return num.toString();
 };
 
-const WW2Map = ({ geographies, countryColors, setSelected, getCountryColor, colorMode, field = 'total' }) => {
-  const projection = geoEqualEarth().scale(150).center([-50, 5]);
+const WW2Map = ({ 
+  geographies, 
+  countryColors, 
+  setSelected, 
+  getCountryColor, 
+  colorMode, 
+  field = 'total',
+  projection,  // ← RECEIVE projection from props
+  t,
+  language 
+}) => {
+  // Use the projection from props, don't create a new one
   const path = geoPath().projection(projection);
+  
   // base values used for scaling each metric (civilian handled specially)
   const baseValues = {
     total: 10000000,
@@ -275,58 +285,53 @@ const WW2Map = ({ geographies, countryColors, setSelected, getCountryColor, colo
   return (
     <>
       <Graticule stroke="#04ff00" strokeWidth={0.3} />
-      <Geographies geography={geographies}>
-        {() => (
-          <>
-            {/* Faint base geography */}
-            {geographies.map(geo => (
-              <Geography
-                key={geo.rsmKey}
-                geography={geo}
-                fill={getColor(geo.properties.name)}
-                fillOpacity={0.1}
-                stroke="#0a1a2a"
-                strokeWidth={0.5}
-                style={{
-                  default: { outline: 'none' },
-                  hover: { fill: '#ffd700', fillOpacity: 0.3, outline: 'none', cursor: 'crosshair' }
-                }}
-              />
-            ))}
-            
-            {/* Casualty circles (single circle scaled by selected field) */}
-            {circles.map((c, idx) => (
-              <circle
-                key={`casualty-${idx}`}
-                cx={c.cx}
-                cy={c.cy}
-                r={c.r}
-                fill={getColor(c.name)}
-                fillOpacity={0.4}
-                stroke="#ffd700"
-                strokeWidth={1.5}
-                style={{ cursor: 'crosshair' }}
-                onClick={() => setSelected({ 
-                  name: c.name, 
-                  value: c.data,
-                  type: 'casualty'
-                })}
-              >
-                <title>{`
-                  ${c.name}
-                  ═══════════════
-                  TOTAL DEATHS: ${typeof c.data.total === 'number' ? formatNumber(c.data.total) : c.data.total}
-                  % OF 1939 POP: ${c.data.percent}%
-                  CIV-MILITARY CASUALTIES: ${c.data.civilianMilitary}
-                  CIV-FAMINE CASUALTIES: ${c.data.civilianFamine}
-                  ═══════════════
-                  Click for details
-                `}</title>
-              </circle>
-            ))}
-          </>
-        )}
-      </Geographies>
+      
+      {/* Render geographies directly - NO inner Geographies component */}
+      {geographies.map(geo => (
+        <Geography
+          key={geo.rsmKey}
+          geography={geo}
+          fill={getColor(geo.properties.name)}
+          fillOpacity={0.1}
+          stroke="#0a1a2a"
+          strokeWidth={0.5}
+          style={{
+            default: { outline: 'none' },
+            hover: { fill: '#ffd700', fillOpacity: 0.3, outline: 'none', cursor: 'crosshair' }
+          }}
+        />
+      ))}
+      
+      {/* Casualty circles (single circle scaled by selected field) */}
+      {circles.map((c, idx) => (
+        <circle
+          key={`casualty-${idx}`}
+          cx={c.cx}
+          cy={c.cy}
+          r={c.r}
+          fill={getColor(c.name)}
+           fillOpacity={0.6}  // Changed from 0.4 to 0.6 to match population map
+          stroke="#0a1a2a"   // Changed from gold to dark navy to match population map
+          strokeWidth={1}  
+          style={{ cursor: 'crosshair',transition: 'all 0.3s ease' }}
+          onClick={() => setSelected({ 
+            name: c.name, 
+            value: c.data,
+            type: 'casualty'
+          })}
+        >
+          <title>{`
+            ${c.name}
+            ═══════════════
+            TOTAL DEATHS: ${typeof c.data.total === 'number' ? formatNumber(c.data.total) : c.data.total}
+            % OF 1939 POP: ${c.data.percent}%
+            CIV-MILITARY CASUALTIES: ${c.data.civilianMilitary}
+            CIV-FAMINE CASUALTIES: ${c.data.civilianFamine}
+            ═══════════════
+            Click for details
+          `}</title>
+        </circle>
+      ))}
     </>
   );
 };

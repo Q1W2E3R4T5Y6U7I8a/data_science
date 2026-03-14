@@ -3,17 +3,19 @@
 + Make customizable colors so that everb cd break as he wants
 + Localisation
 + DUMY link page
-- Look for phone
-- Publish on PM
++- Look for phone
+- Make the 3 follow up questions to make it interesting, pass them into firebase and retrieve data. 
 - Firebase info about user session and console for analitics
+- Publish on PM
 {
 - A game victorine
 - Leaderboard
 }
 - All wars comparison
 - Map prediction 2050/2010
+- Cold War
 
-
+- Fix Google sheet
 - Payment
 - Add track to choose from (minecraft) https://www.youtube.com/watch?v=Dg0IjOzopYU
 

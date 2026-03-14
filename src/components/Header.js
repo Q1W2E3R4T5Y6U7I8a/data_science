@@ -18,8 +18,17 @@ const Header = ({
   handleVolumeChange, 
   setPremiumFeature, 
   setShowPremiumPopup, 
-  t 
-}) => {
+  coldWarTab, 
+  setColdWarTab,
+  gdpView,
+  setGdpView,
+  timelineYear,
+  setTimelineYear,
+  timelineView,
+  setTimelineView,
+  t  // This is the translation function
+}) => {  
+
   return (
     <div className="header">
       <div className="mode-controls">
@@ -28,14 +37,42 @@ const Header = ({
             className={mapMode === 'default' ? 'mode-button active' : 'mode-button'}
             onClick={() => setMapMode('default')}
           >{t('default')}</span>
-          <span
-            className={mapMode === 'gdp' ? 'mode-button active' : 'mode-button'}
-            onClick={() => setMapMode('gdp')}
-          >{t('gdp')}</span>
-          <span
-            className={mapMode === 'area' ? 'mode-button active' : 'mode-button'}
-            onClick={() => setMapMode('area')}
-          >{t('realSize')}</span>
+          
+          {/* GDP Dropdown */}
+          <div className="dropdown">
+            <span
+              className={mapMode === 'gdp' ? 'mode-button active' : 'mode-button'}
+            >{t('gdp')}</span>
+            <div className="dropdown-content">
+              <span 
+                onClick={() => { 
+                  setMapMode('gdp'); 
+                  setGdpView('total'); 
+                }} 
+                className={`mode-button ${mapMode === 'gdp' && gdpView === 'total' ? 'active' : ''}`}
+              >
+                {t('totalGdp')}
+              </span>
+              <span 
+                onClick={() => { 
+                  setMapMode('gdp'); 
+                  setGdpView('growth'); 
+                }} 
+                className={`mode-button ${mapMode === 'gdp' && gdpView === 'growth' ? 'active' : ''}`}
+              >
+                {t('gdpGrowth')}
+              </span>
+              <span 
+                onClick={() => { 
+                  setMapMode('gdp'); 
+                  setGdpView('perCapita'); 
+                }} 
+                className={`mode-button ${mapMode === 'gdp' && gdpView === 'perCapita' ? 'active' : ''}`}
+              >
+                {t('gdpPerCapita')}
+              </span>
+            </div>
+          </div>
 
           {/* Population Dropdown */}
           <div className="dropdown">
@@ -106,118 +143,180 @@ const Header = ({
               </span>
             </div>
           </div>
-          
-{/*
-          {/* Ukraine-Russia War Dropdown * /}
-          <div className="dropdown mode-button">{t('ukraineRussiaWar')}
-            <div className="dropdown-content">
-              <span 
-                onClick={() => {
-                  setPremiumFeature('war-total-casualties');
-                  setShowPremiumPopup(true);
-                }} 
-                className="mode-button"
-              >
-                {t('totalCasualties')}
-              </span>
-              <span 
-                onClick={() => {
-                  setPremiumFeature('war-civilians');
-                  setShowPremiumPopup(true);
-                }} 
-                className="mode-button"
-              >
-                {t('civilians')}
-              </span>
-              <span 
-                onClick={() => {
-                  setPremiumFeature('war-percent-population');
-                  setShowPremiumPopup(true);
-                }} 
-                className="mode-button"
-              >
-                {t('percentOfPopulation')}
-              </span>
-              <span 
-                onClick={() => {
-                  setPremiumFeature('war-aid-to-ukraine');
-                  setShowPremiumPopup(true);
-                }} 
-                className="mode-button"
-              >
-                {t('aidToUkraine')}
-              </span>
-              <span 
-                onClick={() => {
-                  setPremiumFeature('war-aid-to-ukraine');
-                  setShowPremiumPopup(true);
-                }} 
-                className="mode-button"
-              >
-                {t('inPartnershipWithUa')}
-              </span>
-              <span 
-                onClick={() => {
-                  setPremiumFeature('war-russia-business');
-                  setShowPremiumPopup(true);
-                }} 
-                className="mode-button"
-              >
-                {t('inPartnershipWithRu')}
-              </span>
-            </div>
-          </div>
-          
+
           <div className="mode-separator">|||||</div>
 
-          {/* 2050 Dropdown * /}
-          <div className="dropdown mode-button">{t('year2050')}
+          {/* 1900 Dropdown (Past) */}
+          <div className="dropdown">
+            <span
+              className={mapMode === 'timeline' && timelineYear === '1900' ? 'mode-button active' : 'mode-button'}
+            >1900</span>
             <div className="dropdown-content">
               <span 
-                onClick={() => {
-                  setPremiumFeature('2050-population');
-                  setShowPremiumPopup(true);
+                onClick={() => { 
+                  setMapMode('timeline'); 
+                  setTimelineYear('1900');
+                  setTimelineView('population');
                 }} 
-                className="mode-button"
+                className={`mode-button ${mapMode === 'timeline' && timelineYear === '1900' && timelineView === 'population' ? 'active' : ''}`}
               >
-                {t('expectedPopulation')}
+                {t('population')}
               </span>
               <span 
-                onClick={() => {
-                  setPremiumFeature('2050-gdp');
-                  setShowPremiumPopup(true);
+                onClick={() => { 
+                  setMapMode('timeline'); 
+                  setTimelineYear('1900');
+                  setTimelineView('gdp');
                 }} 
-                className="mode-button"
+                className={`mode-button ${mapMode === 'timeline' && timelineYear === '1900' && timelineView === 'gdp' ? 'active' : ''}`}
               >
-                {t('expectedGdp')}
+                {t('gdp')}
               </span>
             </div>
           </div>
-          
-          {/* 2100 Dropdown * /}
-          <div className="dropdown mode-button">{t('year2100')}
+
+          {/* 1950 Dropdown (Past) */}
+          <div className="dropdown">
+            <span
+              className={mapMode === 'timeline' && timelineYear === '1950' ? 'mode-button active' : 'mode-button'}
+            >1950</span>
             <div className="dropdown-content">
               <span 
-                onClick={() => {
-                  setPremiumFeature('2100-population');
-                  setShowPremiumPopup(true);
+                onClick={() => { 
+                  setMapMode('timeline'); 
+                  setTimelineYear('1950');
+                  setTimelineView('population');
                 }} 
-                className="mode-button"
+                className={`mode-button ${mapMode === 'timeline' && timelineYear === '1950' && timelineView === 'population' ? 'active' : ''}`}
               >
-                {t('expectedPopulation')}
+                {t('population')}
               </span>
               <span 
-                onClick={() => {
-                  setPremiumFeature('2100-gdp');
-                  setShowPremiumPopup(true);
+                onClick={() => { 
+                  setMapMode('timeline'); 
+                  setTimelineYear('1950');
+                  setTimelineView('gdp');
                 }} 
-                className="mode-button"
+                className={`mode-button ${mapMode === 'timeline' && timelineYear === '1950' && timelineView === 'gdp' ? 'active' : ''}`}
               >
-                {t('expectedGdp')}
+                {t('gdp')}
               </span>
             </div>
           </div>
-*/}
+
+          {/* 2000 Dropdown (Past/Future boundary) */}
+          <div className="dropdown">
+            <span
+              className={mapMode === 'timeline' && timelineYear === '2000' ? 'mode-button active' : 'mode-button'}
+            >2000</span>
+            <div className="dropdown-content">
+              <span 
+                onClick={() => { 
+                  setMapMode('timeline'); 
+                  setTimelineYear('2000');
+                  setTimelineView('population');
+                }} 
+                className={`mode-button ${mapMode === 'timeline' && timelineYear === '2000' && timelineView === 'population' ? 'active' : ''}`}
+              >
+                {t('population')}
+              </span>
+              <span 
+                onClick={() => { 
+                  setMapMode('timeline'); 
+                  setTimelineYear('2000');
+                  setTimelineView('gdp');
+                }} 
+                className={`mode-button ${mapMode === 'timeline' && timelineYear === '2000' && timelineView === 'gdp' ? 'active' : ''}`}
+              >
+                {t('gdp')}
+              </span>
+            </div>
+          </div>
+
+          {/* NOW Dropdown (Current Data) */}
+          <div className="dropdown">
+            <span
+              className={mapMode === 'population' || mapMode === 'gdp' ? 'mode-button active' : 'mode-button'}
+            >{t('2025')}</span>
+            <div className="dropdown-content">
+              <span 
+                onClick={() => { 
+                  setMapMode('population');
+                  setPopulationView('total');
+                }} 
+                className={`mode-button ${mapMode === 'population' && populationView === 'total' ? 'active' : ''}`}
+              >
+                {t('population')}
+              </span>
+              <span 
+                onClick={() => { 
+                  setMapMode('gdp');
+                  setGdpView('total');
+                }} 
+                className={`mode-button ${mapMode === 'gdp' && gdpView === 'total' ? 'active' : ''}`}
+              >
+                {t('gdp')}
+              </span>
+            </div>
+          </div>
+
+          {/* 2050 Dropdown (Future) */}
+          <div className="dropdown">
+            <span
+              className={mapMode === 'timeline' && timelineYear === '2050' ? 'mode-button active' : 'mode-button'}
+            >2050</span>
+            <div className="dropdown-content">
+              <span 
+                onClick={() => { 
+                  setMapMode('timeline'); 
+                  setTimelineYear('2050');
+                  setTimelineView('population');
+                }} 
+                className={`mode-button ${mapMode === 'timeline' && timelineYear === '2050' && timelineView === 'population' ? 'active' : ''}`}
+              >
+                {t('population')}
+              </span>
+              <span 
+                onClick={() => { 
+                  setMapMode('timeline'); 
+                  setTimelineYear('2050');
+                  setTimelineView('gdp');
+                }} 
+                className={`mode-button ${mapMode === 'timeline' && timelineYear === '2050' && timelineView === 'gdp' ? 'active' : ''}`}
+              >
+                {t('gdp')}
+              </span>
+            </div>
+          </div>
+
+          {/* 2100 Dropdown (Future) */}
+          <div className="dropdown">
+            <span
+              className={mapMode === 'timeline' && timelineYear === '2100' ? 'mode-button active' : 'mode-button'}
+            >2100</span>
+            <div className="dropdown-content">
+              <span 
+                onClick={() => { 
+                  setMapMode('timeline'); 
+                  setTimelineYear('2100');
+                  setTimelineView('population');
+                }} 
+                className={`mode-button ${mapMode === 'timeline' && timelineYear === '2100' && timelineView === 'population' ? 'active' : ''}`}
+              >
+                {t('population')}
+              </span>
+              <span 
+                onClick={() => { 
+                  setMapMode('timeline'); 
+                  setTimelineYear('2100');
+                  setTimelineView('gdp');
+                }} 
+                className={`mode-button ${mapMode === 'timeline' && timelineYear === '2100' && timelineView === 'gdp' ? 'active' : ''}`}
+              >
+                {t('gdp')}
+              </span>
+            </div>
+          </div>
 
           <div className="mode-separator">|||||</div>
           

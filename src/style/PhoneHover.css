@@ -1,0 +1,879 @@
+/* PhoneHover.css */
+
+.phone-hover-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #0a1420 0%, #1a2a3a 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20000;
+  font-family: 'Courier New', monospace;
+  animation: phoneFadeIn 0.5s ease-out;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+@keyframes phoneFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.phone-hover-container {
+  max-width: 500px;
+  width: 100%;
+  background: rgba(15, 30, 40, 0.95);
+  backdrop-filter: blur(10px);
+  border: 3px solid #ffd700;
+  border-radius: 24px;
+  padding: 40px 30px;
+  text-align: center;
+  box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
+  animation: containerAppear 0.5s ease-out 0.2s both;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes containerAppear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Language Switcher */
+.phone-hover-language {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+}
+
+.language-button {
+  background: rgba(255, 215, 0, 0.1);
+  border: 2px solid #ffd700;
+  border-radius: 30px;
+  padding: 8px 15px;
+  display: flex;
+  color: white;
+  font-size: 16px;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  transition: all 0.3s ease;
+}
+
+.language-button:hover {
+  background: rgba(255, 215, 0, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+}
+
+.language-icon {
+  font-size: 18px;
+}
+
+.language-name {
+  color: #ffd700;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.language-arrow {
+  color: #ffd700;
+  font-size: 12px;
+}
+
+.language-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 10px;
+  background: #0f1e2e;
+  border: 2px solid #ffd700;
+  border-radius: 12px;
+  padding: 8px;
+  min-width: 150px;
+  z-index: 20;
+  animation: menuAppear 0.2s ease-out;
+}
+
+@keyframes menuAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.language-option {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.language-option:hover {
+  background: rgba(255, 215, 0, 0.1);
+}
+
+.language-option.active {
+  background: rgba(255, 215, 0, 0.2);
+}
+
+.option-flag {
+  font-size: 18px;
+}
+
+.option-name {
+  color: #c0d0e0;
+  font-size: 14px;
+  flex: 1;
+  text-align: left;
+}
+
+.option-check {
+  color: #04ff00;
+  font-size: 14px;
+}
+
+/* Main Icon */
+.phone-hover-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.phone-hover-title {
+  color: #ffd700;
+  font-size: 28px;
+  margin-bottom: 15px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  font-weight: bold;
+}
+
+.phone-hover-message {
+  color: #c0d0e0;
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  padding: 0 10px;
+}
+
+/* Notice Badge */
+.phone-hover-notice {
+  background: rgba(255, 215, 0, 0.1);
+  border: 2px dashed #ffd700;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.notice-icon {
+  font-size: 20px;
+  color: #ffd700;
+}
+
+.notice-text {
+  color: #ffd700;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Download Buttons */
+.phone-hover-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.phone-hover-button {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  border-radius: 16px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  text-align: left;
+}
+
+.phone-hover-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.phone-hover-button:hover::before {
+  left: 100%;
+}
+
+.phone-hover-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.phone-hover-button:active {
+  transform: translateY(0);
+}
+
+.phone-hover-button.playstore {
+  background: linear-gradient(135deg, #34a853, #0f9d58);
+  border-color: #34a853;
+}
+
+.phone-hover-button.playstore:hover {
+  background: linear-gradient(135deg, #0f9d58, #34a853);
+  box-shadow: 0 0 20px rgba(52, 168, 83, 0.5);
+}
+
+.phone-hover-button.appstore {
+  background: linear-gradient(135deg, #007aff, #5856d6);
+  border-color: #007aff;
+}
+
+.phone-hover-button.appstore:hover {
+  background: linear-gradient(135deg, #5856d6, #007aff);
+  box-shadow: 0 0 20px rgba(0, 122, 255, 0.5);
+}
+
+.button-icon {
+  font-size: 32px;
+  margin-right: 15px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.button-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.button-title {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.button-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  margin-top: 2px;
+  font-style: italic;
+}
+
+.button-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  animation: pulse 2s infinite;
+}
+
+/* Divider */
+.phone-hover-divider {
+  position: relative;
+  text-align: center;
+  margin: 30px 0;
+}
+
+.phone-hover-divider::before,
+.phone-hover-divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: calc(50% - 30px);
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ffd700, transparent);
+}
+
+.phone-hover-divider::before {
+  left: 0;
+}
+
+.phone-hover-divider::after {
+  right: 0;
+}
+
+.phone-hover-divider span {
+  background: #0f1e2e;
+  padding: 0 20px;
+  color: #ffd700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Community Link */
+.phone-hover-community {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(255, 215, 0, 0.1);
+  border: 2px dashed #ffd700;
+  border-radius: 16px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-bottom: 30px;
+}
+
+.phone-hover-community:hover {
+  background: rgba(255, 215, 0, 0.2);
+  transform: scale(1.02);
+  border-style: solid;
+}
+
+.community-icon {
+  font-size: 28px;
+  margin-right: 15px;
+  color: #ffd700;
+}
+
+.community-text {
+  color: #ffd700;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.community-arrow {
+  margin-left: 15px;
+  color: #ffd700;
+  font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+.phone-hover-community:hover .community-arrow {
+  transform: translateX(5px);
+}
+
+/* Quick Links */
+.phone-hover-quick-links {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.quick-link {
+  background: rgba(255, 215, 0, 0.1);
+  border: 2px solid #3a5f7f;
+  border-radius: 12px;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  transition: all 0.3s ease;
+}
+
+.quick-link:hover {
+  border-color: #ffd700;
+  background: rgba(255, 215, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.quick-icon {
+  font-size: 16px;
+  color: #ffd700;
+}
+
+.quick-text {
+  color: #c0d0e0;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Social Links */
+.phone-hover-social {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.social-button {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: rgba(255, 215, 0, 0.1);
+  border: 2px solid #3a5f7f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  transition: all 0.3s ease;
+  color: #ffd700;
+  font-size: 20px;
+}
+
+.social-button:hover {
+  border-color: #ffd700;
+  background: rgba(255, 215, 0, 0.2);
+  transform: translateY(-2px) scale(1.1);
+  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+}
+
+.social-icon {
+  font-size: 20px;
+}
+
+/* Footer */
+.phone-hover-footer {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.phone-hover-footer p {
+  color: #c0d0e0;
+  font-size: 14px;
+  font-style: italic;
+  margin-bottom: 15px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.footer-link {
+  background: transparent;
+  border: none;
+  color: #ffd700;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.footer-link:hover {
+  text-decoration-color: #ffd700;
+  color: #04ff00;
+}
+
+.footer-separator {
+  color: #3a5f7f;
+  font-size: 12px;
+}
+
+.footer-copyright {
+  color: #3a5f7f;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+/* Alert Popup */
+.phone-hover-alert {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  background: #0f1e2e;
+  border: 2px solid #ffd700;
+  border-radius: 12px;
+  padding: 15px;
+  animation: slideUp 0.3s ease-out;
+  z-index: 21000;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.alert-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.alert-icon {
+  font-size: 20px;
+  color: #ffd700;
+}
+
+.alert-message {
+  color: #ffd700;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Decorative Elements */
+.phone-hover-decoration {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.decoration-1 {
+  top: -100px;
+  left: -100px;
+  animation: rotate 20s linear infinite;
+}
+
+.decoration-2 {
+  bottom: -100px;
+  right: -100px;
+  animation: rotate 15s linear infinite reverse;
+}
+
+.decoration-3 {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Mobile Responsive adjustments */
+@media (max-width: 480px) {
+  .phone-hover-container {
+    padding: 30px 20px;
+  }
+
+  .phone-hover-icon {
+    font-size: 60px;
+  }
+
+  .phone-hover-title {
+    font-size: 24px;
+  }
+
+  .phone-hover-message {
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+
+  .button-icon {
+    font-size: 28px;
+  }
+
+  .button-title {
+    font-size: 18px;
+  }
+
+  .button-subtitle {
+    font-size: 10px;
+  }
+
+  .community-text {
+    font-size: 16px;
+  }
+
+  .quick-link {
+    padding: 8px 12px;
+  }
+
+  .quick-text {
+    font-size: 11px;
+  }
+
+  .social-button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .social-icon {
+    font-size: 18px;
+  }
+}
+
+/* Landscape mode */
+@media (max-height: 600px) and (orientation: landscape) {
+  .phone-hover-container {
+    padding: 20px;
+  }
+
+  .phone-hover-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+  }
+
+  .phone-hover-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .phone-hover-message {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .phone-hover-buttons {
+    margin-bottom: 20px;
+  }
+
+  .phone-hover-button {
+    padding: 10px 15px;
+  }
+
+  .quick-links {
+    margin-bottom: 15px;
+  }
+
+  .social-links {
+    margin-bottom: 15px;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .phone-hover-button:hover,
+  .quick-link:hover,
+  .social-button:hover,
+  .language-button:hover {
+    transform: none;
+  }
+  
+  .phone-hover-button:active,
+  .quick-link:active,
+  .social-button:active,
+  .language-button:active {
+    transform: scale(0.98);
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .phone-hover-container {
+    border: 4px solid #ffd700;
+  }
+  
+  .phone-hover-title,
+  .phone-hover-message,
+  .community-text,
+  .footer-link {
+    text-shadow: none;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .phone-hover-icon,
+  .decoration-1,
+  .decoration-2,
+  .decoration-3 {
+    animation: none;
+  }
+  
+  .phone-hover-container,
+  .language-menu,
+  .phone-hover-alert {
+    animation: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .phone-hover-overlay {
+    display: none;
+  }
+}
+
+/* Language Switcher - Bottom Center Circular Flags */
+.phone-hover-language-bottom {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.language-label {
+  color: #ffd700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0.8;
+}
+
+.language-circles {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.language-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 3px solid #3a5f7f;
+  background: #0f1e2e;
+  cursor: pointer;
+  padding: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.language-circle:hover {
+  transform: translateY(-5px) scale(1.05);
+  border-color: #ffd700;
+  box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+}
+
+.language-circle:active {
+  transform: translateY(0) scale(0.95);
+}
+
+.language-circle.active {
+  border-color: #ffd700;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  animation: activePulse 2s infinite;
+}
+
+.language-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@keyframes activePulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.9);
+  }
+}
+
+/* Adjust footer spacing */
+.phone-hover-footer {
+  margin-top: 10px;
+  padding-top: 15px;
+}
+
+/* Mobile responsive for language circles */
+@media (max-width: 480px) {
+  .language-circle {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .language-circles {
+    gap: 15px;
+  }
+}
+
+/* Landscape mode */
+@media (max-height: 600px) and (orientation: landscape) {
+  .phone-hover-language-bottom {
+    margin-top: 15px;
+    margin-bottom: 10px;
+  }
+  
+  .language-circle {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .language-circles {
+    gap: 12px;
+  }
+}
