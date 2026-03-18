@@ -23,10 +23,16 @@ import PhoneHover from './components/PhoneHover';
 import flagColors from './data/flagColors';
 import continentMap from './data/continentMap';
 import continentColors from './data/continentColors';
+import { supabase } from './supaBaseClient';
+import SignInPage from './components/SignInPage'; 
+import Chat from './components/Chat';
+import Achievements from './components/Achievements';
 
 import './App.css';
 
 function App() {
+  const [user, setUser] = useState(null);  // ✅ Add this
+const [loading, setLoading] = useState(true);  // ✅ Add this
   const { t, language } = useLocalization();
   const [showPremiumPopup, setShowPremiumPopup] = useState(false);
   const [premiumFeature, setPremiumFeature] = useState(null);
@@ -48,7 +54,10 @@ function App() {
   const [hasSeenQuiz, setHasSeenQuiz] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [detectionDone, setDetectionDone] = useState(false);
-  const [forceMobile, setForceMobile] = useState(false); // For testing
+  const [forceMobile, setForceMobile] = useState(false); 
+  const [showChat, setShowChat] = useState(false);
+  const [showAchievements, setShowAchievements] = useState(false);
+const [achievementTrigger, setAchievementTrigger] = useState(null);
 
   const audioRef = useRef(null);
   const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
@@ -56,6 +65,60 @@ function App() {
 
   // Create projection once
   const projection = geoEqualEarth().scale(150).center([-50, 5]);
+
+  //REGISTRATION
+  useEffect(() => {
+    checkUser();
+    
+    // Listen for auth changes
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (session?.user) {
+          setUser(session.user);
+        } else {
+          setUser(null);
+        }
+        setLoading(false);
+      }
+    );
+
+    return () => {
+      authListener?.subscription.unsubscribe();
+    };
+  }, []);
+
+  const checkUser = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    setUser(user);
+    setLoading(false);
+  };
+
+useEffect(() => {
+  const handleAchievementTrigger = (event) => {
+    triggerAchievement(event.detail);
+  };
+  
+  window.addEventListener('triggerAchievement', handleAchievementTrigger);
+  
+  return () => {
+    window.removeEventListener('triggerAchievement', handleAchievementTrigger);
+  };
+}, []);
+
+  const handleAuthSuccess = (user) => {
+    setUser(user);
+  };
+
+  const handleGuestVisit = () => {
+    setUser({ guest: true }); // Guest user
+  };
+
+  
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+  };
 
   // SIMPLE MOBILE DETECTION
   useEffect(() => {
@@ -119,41 +182,67 @@ function App() {
     }
   }, [isMobile, detectionDone, forceMobile]);
 
-  useEffect(() => {
-    try {
-      audioRef.current = new Audio(publicUrl + '/music_menu.mp3');
-      audioRef.current.loop = true;
-      audioRef.current.volume = musicVolume / 100;
-    } catch (error) {
-      console.log('Audio initialization failed:', error);
+  // Replace your existing audio useEffect with this:
+useEffect(() => {
+  try {
+    // Clean up any existing audio instance
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
     }
     
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
-    };
-  }, []);
-
-  useEffect(() => {
+    // Create new audio instance
+    audioRef.current = new Audio(publicUrl + '/music_menu.mp3');
+    audioRef.current.loop = true;
+    audioRef.current.volume = musicVolume / 100;
+    
+    // Add error handling for audio loading
+    audioRef.current.addEventListener('error', (e) => {
+      console.log('Audio loading error:', e);
+    });
+    
+  } catch (error) {
+    console.log('Audio initialization failed:', error);
+  }
+  
+  return () => {
     if (audioRef.current) {
-      audioRef.current.volume = musicVolume / 100;
-    }
-  }, [musicVolume]);
-
-  const toggleMusic = () => {
-    if (audioRef.current) {
-      if (isMusicPlaying) {
-        audioRef.current.pause();
-        setIsMusicPlaying(false);
-      } else {
-        audioRef.current.play()
-          .then(() => setIsMusicPlaying(true))
-          .catch(error => console.log('Audio playback failed:', error));
-      }
+      audioRef.current.pause();
+      audioRef.current.src = ''; // Clear source
+      audioRef.current.load(); // Force reload to stop any pending requests
+      audioRef.current = null;
     }
   };
+}, [publicUrl]); // Add publicUrl as dependency
+
+// Update toggleMusic function:
+const toggleMusic = () => {
+  if (audioRef.current) {
+    if (isMusicPlaying) {
+      audioRef.current.pause();
+      setIsMusicPlaying(false);
+    } else {
+      // Create a new promise to handle play()
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => setIsMusicPlaying(true))
+          .catch(error => {
+            console.log('Audio playback failed:', error);
+            // If play fails, try to recreate audio
+            if (error.name === 'AbortError' || error.message.includes('Lock broken')) {
+              audioRef.current = new Audio(publicUrl + '/music_menu.mp3');
+              audioRef.current.loop = true;
+              audioRef.current.volume = musicVolume / 100;
+              audioRef.current.play()
+                .then(() => setIsMusicPlaying(true))
+                .catch(e => console.log('Retry failed:', e));
+            }
+          });
+      }
+    }
+  }
+};
 
   const handleVolumeChange = (e) => {
     setMusicVolume(e.target.value);
@@ -174,6 +263,26 @@ function App() {
   };
 
   const usaGdp = GDP_DATA['United States'] || GDP_DATA['United States of America'] || GDP_DATA['USA'];
+
+  const triggerAchievement = (id) => {
+  setAchievementTrigger(id);
+  setTimeout(() => setAchievementTrigger(null), 100);
+};
+
+// Add to existing handlers:
+const handleMapModeChange = (mode) => {
+  setMapMode(mode);
+  // Trigger Time Traveler achievement when switching to timeline
+  if (mode === 'timeline') {
+    triggerAchievement(2); // Time Traveler
+  }
+  // Count map modes for Data Explorer
+  if (!window.viewedModes) window.viewedModes = new Set();
+  window.viewedModes.add(mode);
+  if (window.viewedModes.size >= 5) {
+    triggerAchievement(5); // Data Explorer
+  }
+};
 
   const renderMap = () => {
     if (!geographies.length) return null;
@@ -250,6 +359,15 @@ function App() {
     );
   }
 
+  if (!user) {
+    return (
+      <SignInPage 
+        onAuthSuccess={handleAuthSuccess}
+        onGuestVisit={handleGuestVisit}
+      />
+    );
+  }
+
   // If mobile OR force mobile, show PhoneHover component
   if (isMobile || forceMobile) {
     console.log('Showing mobile view (isMobile:', isMobile, 'forceMobile:', forceMobile, ')');
@@ -287,6 +405,8 @@ function App() {
           setTimelineYear={setTimelineYear}
           timelineView={timelineView}
           setTimelineView={setTimelineView}
+          user={user}
+          onLogout={handleLogout}
         />
 
         <div className="map-container">
@@ -370,6 +490,76 @@ function App() {
         />
 
         <button
+          className="achievements-floating-btn"
+          onClick={() => setShowAchievements(true)}
+          style={{
+            position: 'fixed',
+            bottom: '260px',
+            right: '20px',
+            zIndex: 1000,
+            background: '#04ff00',
+            color: '#0a1420',
+            border: 'none',
+            borderRadius: '50%',
+            width: '60px',
+            height: '60px',
+            fontSize: '28px',
+            cursor: 'pointer',
+            boxShadow: '0 0 20px rgba(4, 255, 0, 0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          🏆
+        </button>
+
+        {showAchievements && (
+          <Achievements
+            user={user}
+            t={t}
+            onClose={() => setShowAchievements(false)}
+            triggerAchievement={achievementTrigger}
+          />
+        )}
+
+        <button
+            className="chat-floating-btn"
+            onClick={() => setShowChat(!showChat)}
+            style={{
+              position: 'fixed',
+              bottom: '180px',
+              right: '20px',
+              zIndex: 1000,
+              background: '#4a90e2',
+              color: 'white',
+              border: 'none',
+              borderRadius: '50%',
+              width: '60px',
+              height: '60px',
+              fontSize: '28px',
+              cursor: 'pointer',
+              boxShadow: '0 0 20px rgba(74, 144, 226, 0.5)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            💭
+          </button>
+
+          {showChat && (
+            <div className="chat-wrapper">
+              <Chat 
+                user={user} 
+                t={t} 
+                onClose={() => setShowChat(false)} 
+              />
+            </div>
+          )}
+
+        <button
           className="quiz-floating-btn"
           onClick={() => setShowDataQuiz(true)}
           style={{
@@ -402,11 +592,28 @@ function App() {
           />
         )}
 
-        <div className="privacy-footer-link">
-          <button onClick={() => setShowPrivacyPopup(true)} className="privacy-link-button">
-            [ PRIVACY POLICY ]
-          </button>
-        </div>
+        {user && !user.guest && (
+        <div className="user-info-footer">
+              <span className="user-email-footer">
+                {user.user_metadata?.username || user.email?.split('@')[0] || 'User'}
+              </span>
+              <button onClick={handleLogout} className="logout-footer-btn">
+                LOGOUT
+              </button>
+            </div>
+          )}
+          {user?.guest && (
+            <div className="guest-info-footer">
+              <span className="guest-text-footer">Guest Mode</span>
+            </div>
+          )}
+
+       <div className="privacy-footer">
+        <button onClick={() => setShowPrivacyPopup(true)} className="privacy-link-button">
+          [ PRIVACY POLICY ]
+        </button>
+      </div>
+
 
         {showPrivacyPopup && (
           <PrivacyPolicy onAccept={() => setShowPrivacyPopup(false)} t={t} />

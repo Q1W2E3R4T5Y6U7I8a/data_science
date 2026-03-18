@@ -30,14 +30,14 @@ const GDPMap = ({
     if (gdpEntry && centroid && centroid.length === 2 && !isNaN(centroid[0]) && !isNaN(centroid[1])) {
       let radius = CIRCLE_CONFIG.MIN_RADIUS;
       let fillColor = getCountryColor(name, colorMode);
-      let scaleType = 'linear';
+      const scaleType = getScaleTypeForView('gdp', gdpView);
 
       if (gdpView === 'total') {
-        radius = calculateCircleRadius(gdpEntry.total, maxTotal, 'sqrt');
-        scaleType = 'sqrt';
+        radius = calculateCircleRadius(gdpEntry.total, maxTotal, scaleType);
+        radius = radius / 2;
       } else if (gdpView === 'growth') {
         const absGrowth = Math.abs(gdpEntry.growth || 0);
-        radius = calculateCircleRadius(absGrowth, maxGrowth, 'linear');
+        radius = calculateCircleRadius(absGrowth, maxGrowth, scaleType);
         
         if (gdpEntry.growth > 0) {
           fillColor = '#00ff4c';
@@ -45,7 +45,7 @@ const GDPMap = ({
           fillColor = '#ff3333';
         }
       } else if (gdpView === 'perCapita') {
-        radius = calculateCircleRadius(gdpEntry.perCapita || 0, maxPerCapita, 'linear');
+        radius = calculateCircleRadius(gdpEntry.perCapita || 0, maxPerCapita, scaleType);
       }
 
       circles.push({

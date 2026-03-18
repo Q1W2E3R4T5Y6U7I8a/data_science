@@ -92,7 +92,8 @@ const FuturePastMap = ({
           const centroid = path.centroid(geo);
           if (!centroid || centroid.length !== 2 || isNaN(centroid[0]) || isNaN(centroid[1])) return;
 
-          const radius = calculateCircleRadius(numValue, maxValue, 'sqrt');
+          const scaleType = getScaleTypeForView('timeline', timelineView);
+          const radius = calculateCircleRadius(numValue, maxValue, scaleType);
           
           results.push({
             name,

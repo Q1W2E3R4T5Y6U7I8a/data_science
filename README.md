@@ -4,7 +4,12 @@
 + Localisation
 + DUMY link page
 +- Look for phone
-- Make the 3 follow up questions to make it interesting, pass them into firebase and retrieve data. 
++ Make the 3 follow up questions to make it interesting,
++ make registration with SQL
+- make chat with SQL
+- publish backend
+- make leaderboard / visits and ACHIVEMENTS TO BE SEEN
+- pass them into firebase and retrieve data. 
 - Firebase info about user session and console for analitics
 - Publish on PM
 {

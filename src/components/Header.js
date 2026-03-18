@@ -26,7 +26,9 @@ const Header = ({
   setTimelineYear,
   timelineView,
   setTimelineView,
-  t  // This is the translation function
+  t,
+   user,        // ❌ Missing from props
+  onLogout 
 }) => {  
 
   return (
@@ -366,6 +368,7 @@ const Header = ({
         
         <LanguageSwitcher />
       </div>
+
     </div>
   );
 };

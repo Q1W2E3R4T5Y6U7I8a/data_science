@@ -632,6 +632,8 @@ ${countryName}:
         '> Type "userinfo" for system information',
         '> Type "data_info" for details on data reference',
       ];
+      
+      window.dispatchEvent(new CustomEvent('triggerAchievement', { detail: 1 }));
       setDisplayLines(lines);
       setHasInitialized(true);
       setIsTyping(true);

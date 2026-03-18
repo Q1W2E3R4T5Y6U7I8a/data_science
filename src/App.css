@@ -6,6 +6,9 @@
 @import './style/LanguageSwitcher.css';
 @import './style/DataQuiz.css';
 @import './style/PhoneHover.css';
+@import './style/SignInPage.css';
+@import './style/Chat.css';
+@import './style/Achievements.css';
 
 * { 
   margin: 0; 
