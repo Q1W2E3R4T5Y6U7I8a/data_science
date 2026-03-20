@@ -1,3 +1,4 @@
+/* App.css (modified - with movement controls next to zoom, both smaller) */
 @import './style/CodInfo.css';
 @import './style/PrivacyPolicy.css';
 @import './style/country-colors.css';
@@ -24,7 +25,6 @@
   padding: 10px;
 }
 
-/* Map Container */
 .map-container {
   position: relative;
   border: 2px solid #3a5f7f;
@@ -34,12 +34,8 @@
   max-width: 1200px;
   margin: 0 auto;
   aspect-ratio: 2/1;
-}
-
-@media (max-width: 768px) {
-  .map-container {
-    aspect-ratio: 1/0.7;
-  }
+  cursor: default;
+  user-select: none;
 }
 
 .map-emblem {
@@ -99,9 +95,6 @@
 .close:active {
   transform: scale(0.9);
 }
-
-/* Minimized Terminal - Now on LEFT side */
-
 
 /* Target display for casualty data */
 .target .casualty-detail {
@@ -164,6 +157,12 @@
     width: 20px;
     height: 20px;
   }
+  
+  /* Adjust control sizes for mobile */
+  .movement-controls,
+  .zoom-controls {
+    transform: scale(0.85);
+  }
 }
 
 /* Desktop override */
@@ -192,7 +191,7 @@
 
 @keyframes slideIn {
   from {
-    transform: translateX(-100%); /* Changed from 100% to -100% for left slide */
+    transform: translateX(-100%);
     opacity: 0;
   }
   to {
@@ -201,3 +200,152 @@
   }
 }
 
+.rsm-svg {
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.rsm-geography {
+  transition: filter 0.2s ease;
+  cursor: pointer;
+}
+
+.rsm-geography:hover {
+  filter: brightness(1.1);
+  transition: filter 0.2s ease;
+}
+
+/* Combined Controls Container - Movement + Zoom together */
+.combined-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  gap: 12px;
+  pointer-events: auto;
+}
+
+.movement-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: rgba(10, 20, 32, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 6px;
+  padding: 4px;
+  border: 1px solid rgba(74, 144, 226, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  pointer-events: auto;
+  width: fit-content;
+  height: fit-content;
+}
+
+.move-middle-row {
+  display: flex;
+  gap: 2px;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+}
+
+.move-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, #1a2a3a, #0f1a24);
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  font-family: monospace;
+  pointer-events: auto;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+/* Optional: Make zoom controls equally compact */
+.zoom-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: rgba(10, 20, 32, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 6px;
+  padding: 4px;
+  border: 1px solid rgba(74, 144, 226, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  pointer-events: auto;
+  width: fit-content;
+  height: fit-content;
+}
+
+.zoom-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, #1a2a3a, #0f1a24);
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  font-family: monospace;
+  pointer-events: auto;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.zoom-reset {
+  font-size: 11px;
+}
+
+.zoom-level {
+  text-align: center;
+  font-size: 8px;
+  color: #ffffff;
+  padding: 2px 2px;
+  background: rgba(74, 144, 226, 0.1);
+  border-radius: 3px;
+  margin-top: 2px;
+  font-family: monospace;
+  font-weight: bold;
+}
+
+/* Controls wrapper to keep everything tight */
+.controls-wrapper {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  pointer-events: auto;
+}
+
+/* Optional: Add a container for the controls */
+.controls-wrapper {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  gap: 12px;
+  pointer-events: auto;
+}

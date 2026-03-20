@@ -88,6 +88,51 @@ const ua = {
     october: "Жовтень",
     november: "Листопад",
     december: "Грудень"
+  },
+
+  achievements: {
+    achievements: 'Досягнення',
+    achievement_unlocked: 'Досягнення розблоковано!',
+    achievement_1_name: 'Перший Клік',
+    achievement_1_description: 'Клацніть на першу країну',
+    achievement_2_name: 'Мандрівник у Часі',
+    achievement_2_description: 'Дослідіть перегляд часової шкали',
+    achievement_3_name: 'Дослідник Даних',
+    achievement_3_description: 'Спробуйте 5 різних режимів карти',
+    achievement_4_name: 'Соціальний Метелик',
+    achievement_4_description: 'Надішліть своє перше повідомлення в чаті',
+    achievement_5_name: 'Майстер ВВП',
+    achievement_5_description: 'Перегляньте дані ВВП для 10 країн',
+    achievement_modal_title: 'Ваші Досягнення',
+    achievement_locked: 'Заблоковано',
+    achievement_unlocked_badge: '✓',
+    achievement_progress: 'Прогрес',
+    achievement_completed: 'Завершено',
+    achievement_remaining: 'Залишилось',
+  },
+
+  chat: {
+    title: 'Глобальний Чат',
+    loading: 'Завантаження повідомлень...',
+    empty: 'Ще немає повідомлень. Будьте першим, хто почне чат!',
+    placeholder: 'Введіть ваше повідомлення...',
+    send: '📨 Надіслати',
+    sending: '📤 Надсилання...',
+    footer: 'Будьте ввічливі! 🎮',
+
+      guestMode: 'Гість',
+  guestMessage: 'Увійдіть, щоб приєднатися до розмови!',
+  loginToChat: 'Увійдіть для чату...',
+  onlineNow: 'Зараз онлайн',
+  more: 'більше',
+  justNow: 'щойно',
+  minutesAgo: 'хв тому',
+  hoursAgo: 'год тому',
+  yesterday: 'вчора',
+  cancel: 'Скасувати',
+
+  guestViewMessage: 'Ви переглядаєте повідомлення як гість. Увійдіть, щоб приєднатися до розмови!',
+loginToSend: 'Увійдіть для надсилання повідомлень'
   }
 };
 

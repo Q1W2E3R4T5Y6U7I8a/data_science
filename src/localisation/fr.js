@@ -88,6 +88,51 @@ const fr = {
     october: "Octobre",
     november: "Novembre",
     december: "Décembre"
+  },
+
+  achievements: {
+    achievements: 'Réalisations',
+    achievement_unlocked: 'Réalisation débloquée !',
+    achievement_1_name: 'Premier Clic',
+    achievement_1_description: 'Cliquez sur votre premier pays',
+    achievement_2_name: 'Voyageur Temporel',
+    achievement_2_description: 'Explorez la vue chronologique',
+    achievement_3_name: 'Explorateur de Données',
+    achievement_3_description: 'Essayez 5 modes de carte différents',
+    achievement_4_name: 'Papillon Social',
+    achievement_4_description: 'Envoyez votre premier message de chat',
+    achievement_5_name: 'Maître du PIB',
+    achievement_5_description: 'Consultez les données du PIB pour 10 pays',
+    achievement_modal_title: 'Vos Réalisations',
+    achievement_locked: 'Verrouillé',
+    achievement_unlocked_badge: '✓',
+    achievement_progress: 'Progrès',
+    achievement_completed: 'Terminé',
+    achievement_remaining: 'Restant',
+  },
+
+  chat: {
+    title: 'Chat Global',
+    loading: 'Chargement des messages...',
+    empty: 'Pas encore de messages. Soyez le premier à discuter !',
+    placeholder: 'Tapez votre message...',
+    send: '📨 Envoyer',
+    sending: '📤 Envoi...',
+    footer: 'Soyez respectueux ! 🎮',
+
+    guestMode: 'Invité',
+  guestMessage: 'Connectez-vous pour rejoindre la conversation !',
+  loginToChat: 'Connectez-vous pour chatter...',
+  onlineNow: 'En ligne',
+  more: 'plus',
+  justNow: 'à l\'instant',
+  minutesAgo: 'min',
+  hoursAgo: 'h',
+  yesterday: 'hier',
+  cancel: 'Annuler',
+
+  guestViewMessage: 'Vous visualisez les messages en tant qu\'invité. Connectez-vous pour rejoindre la conversation !',
+loginToSend: 'Connectez-vous pour envoyer des messages'
   }
 };
 

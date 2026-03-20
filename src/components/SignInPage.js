@@ -33,7 +33,7 @@ const SignInPage = ({ onAuthSuccess, onGuestVisit }) => {
 
   const fetchIpData = async () => {
     try {
-      const response = await fetch('https://ipapi.co/json/');
+      const response = await fetch('https://api.allorigins.win/raw?url=https://ipapi.co/json/');
       const data = await response.json();
       setIpAddress(data.ip || 'Unknown');
       setCountry(data.country_name || 'Unknown');
